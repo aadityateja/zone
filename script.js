@@ -1,478 +1,771 @@
-```javascript
-/* =========================================================
-   DRAVYA / ZONE
-   September 2026
-========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =====================================================
+     CONFIG
+  ===================================================== */
+
+  const PASSWORD = "Dravyaismyfriend@2026";
+
+  const STORAGE_KEY =
+    "dravya-zone-september-2026";
+
+  const AUTH_KEY =
+    "dravya-zone-authenticated";
 
 
-/* =========================================================
-   CONFIGURATION
-========================================================= */
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
 
-const PASSWORD = "Dravyaismyfriend@2026";
+  const lockScreen =
+    document.getElementById("lock-screen");
 
-const STORAGE_KEY = "dravya-zone-september-2026";
+  const zone =
+    document.getElementById("zone");
 
-const MONTH = 8; // September = 8 because JavaScript months start at 0
+  const passwordInput =
+    document.getElementById("password-input");
 
-const YEAR = 2026;
+  const enterButton =
+    document.getElementById("enter-button");
 
-const SESSION_TIMES = [
-  "10:30 — 1:30",
-  "2:00 — 5:00",
-  "5:00 — 7:00"
-];
+  const passwordError =
+    document.getElementById("password-error");
 
-const DAY_NAMES = [
-  "SUN",
-  "MON",
-  "TUE",
-  "WED",
-  "THU",
-  "FRI",
-  "SAT"
-];
+  const lockButton =
+    document.getElementById("lock-button");
 
+  const calendar =
+    document.getElementById("calendar");
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+  const monthObjective =
+    document.getElementById("month-objective");
 
-const lockScreen =
-  document.getElementById("lock-screen");
-
-const zone =
-  document.getElementById("zone");
-
-const passwordInput =
-  document.getElementById("password-input");
-
-const enterButton =
-  document.getElementById("enter-button");
-
-const passwordError =
-  document.getElementById("password-error");
-
-const lockButton =
-  document.getElementById("lock-button");
-
-const calendar =
-  document.getElementById("calendar");
-
-const monthObjective =
-  document.getElementById("month-objective");
-
-const saveStatus =
-  document.getElementById("save-status");
+  const saveStatus =
+    document.getElementById("save-status");
 
 
-/* =========================================================
-   STORAGE
-========================================================= */
+  /* =====================================================
+     MONTH SETTINGS
+  ===================================================== */
 
-let plannerData = loadData();
+  const YEAR = 2026;
+
+  // JavaScript: January = 0
+  // September = 8
+  const MONTH = 8;
+
+  const SESSION_TIMES = [
+    "10:30 — 1:30",
+    "2:00 — 5:00",
+    "5:00 — 7:00"
+  ];
+
+  const DAY_NAMES = [
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
+  ];
 
 
-function createDefaultData() {
+  /* =====================================================
+     LOAD DATA
+  ===================================================== */
 
-  const data = {
+  let plannerData = {
     monthObjective: "",
-    weeks: {}
+    weeks: {},
+    days: {}
   };
 
-  return data;
-}
-
-
-function loadData() {
 
   try {
 
     const saved =
       localStorage.getItem(STORAGE_KEY);
 
-    if (!saved) {
-      return createDefaultData();
+    if (saved) {
+      plannerData =
+        JSON.parse(saved);
     }
-
-    return JSON.parse(saved);
 
   } catch (error) {
 
     console.error(
-      "Could not load planner data:",
+      "Could not load saved planner data:",
       error
     );
 
-    return createDefaultData();
-  }
-}
-
-
-function saveData() {
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(plannerData)
-  );
-
-  showSaved();
-}
-
-
-function showSaved() {
-
-  saveStatus.textContent = "SAVED ✓";
-
-  clearTimeout(showSaved.timeout);
-
-  showSaved.timeout =
-    setTimeout(() => {
-
-      saveStatus.textContent =
-        "ALL CHANGES SAVED";
-
-    }, 1200);
-}
-
-
-/* =========================================================
-   PASSWORD
-========================================================= */
-
-function unlockZone() {
-
-  const enteredPassword =
-    passwordInput.value;
-
-  if (enteredPassword === PASSWORD) {
-
-    localStorage.setItem(
-      "dravya-zone-authenticated",
-      "true"
-    );
-
-    lockScreen.classList.add("hidden");
-
-    zone.classList.remove("hidden");
-
-    passwordInput.value = "";
-
-  } else {
-
-    passwordError.classList.add("show");
-
-    passwordInput.value = "";
-
-    setTimeout(() => {
-
-      passwordError.classList.remove("show");
-
-    }, 1800);
-  }
-}
-
-
-enterButton.addEventListener(
-  "click",
-  unlockZone
-);
-
-
-passwordInput.addEventListener(
-  "keydown",
-  event => {
-
-    if (event.key === "Enter") {
-      unlockZone();
-    }
-
-  }
-);
-
-
-/* =========================================================
-   LOCK
-========================================================= */
-
-lockButton.addEventListener(
-  "click",
-  () => {
-
-    localStorage.removeItem(
-      "dravya-zone-authenticated"
-    );
-
-    zone.classList.add("hidden");
-
-    lockScreen.classList.remove("hidden");
-
-  }
-);
-
-
-/* =========================================================
-   AUTH CHECK
-========================================================= */
-
-function checkAuthentication() {
-
-  const authenticated =
-    localStorage.getItem(
-      "dravya-zone-authenticated"
-    );
-
-  if (authenticated === "true") {
-
-    lockScreen.classList.add("hidden");
-
-    zone.classList.remove("hidden");
-
   }
 
-}
 
+  /* =====================================================
+     SAVE
+  ===================================================== */
 
-/* =========================================================
-   DATE HELPERS
-========================================================= */
+  function saveData() {
 
-function getDaysInMonth(
-  year,
-  month
-) {
+    try {
 
-  return new Date(
-    year,
-    month + 1,
-    0
-  ).getDate();
-
-}
-
-
-function getFirstDay(
-  year,
-  month
-) {
-
-  return new Date(
-    year,
-    month,
-    1
-  ).getDay();
-
-}
-
-
-/* =========================================================
-   CREATE DAY DATA
-========================================================= */
-
-function getDayData(day) {
-
-  if (!plannerData.days) {
-    plannerData.days = {};
-  }
-
-  if (!plannerData.days[day]) {
-
-    plannerData.days[day] = {
-      sessions: [
-        "",
-        "",
-        ""
-      ]
-    };
-
-  }
-
-  return plannerData.days[day];
-}
-
-
-/* =========================================================
-   CREATE WEEK DATA
-========================================================= */
-
-function getWeekData(weekNumber) {
-
-  if (!plannerData.weeks) {
-    plannerData.weeks = {};
-  }
-
-  if (!plannerData.weeks[weekNumber]) {
-
-    plannerData.weeks[weekNumber] = {
-      objective: ""
-    };
-
-  }
-
-  return plannerData.weeks[weekNumber];
-}
-
-
-/* =========================================================
-   CREATE DAY CARD
-========================================================= */
-
-function createDayCard(day) {
-
-  const card =
-    document.createElement("article");
-
-  card.className = "day-card";
-
-  const date =
-    new Date(
-      YEAR,
-      MONTH,
-      day
-    );
-
-  const dayName =
-    DAY_NAMES[date.getDay()];
-
-  const dayData =
-    getDayData(day);
-
-  card.innerHTML = `
-    
-    <div class="day-header">
-
-      <div class="day-name">
-        ${dayName}
-      </div>
-
-      <div class="day-number">
-        ${day}
-      </div>
-
-    </div>
-
-  `;
-
-
-  SESSION_TIMES.forEach(
-    (time, index) => {
-
-      const session =
-        document.createElement("div");
-
-      session.className = "session";
-
-      session.innerHTML = `
-
-        <div class="session-time">
-          ${time}
-        </div>
-
-        <textarea
-          placeholder="PLAN..."
-          data-day="${day}"
-          data-session="${index}"
-        ></textarea>
-
-      `;
-
-      const textarea =
-        session.querySelector("textarea");
-
-      textarea.value =
-        dayData.sessions[index] || "";
-
-      textarea.addEventListener(
-        "input",
-        event => {
-
-          const dayNumber =
-            Number(
-              event.target.dataset.day
-            );
-
-          const sessionIndex =
-            Number(
-              event.target.dataset.session
-            );
-
-          const data =
-            getDayData(dayNumber);
-
-          data.sessions[sessionIndex] =
-            event.target.value;
-
-          saveData();
-
-        }
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(plannerData)
       );
 
-      card.appendChild(session);
+      saveStatus.textContent =
+        "SAVED ✓";
+
+      clearTimeout(
+        saveData.timeout
+      );
+
+      saveData.timeout =
+        setTimeout(() => {
+
+          saveStatus.textContent =
+            "ALL CHANGES SAVED";
+
+        }, 1200);
+
+    } catch (error) {
+
+      console.error(
+        "Could not save planner:",
+        error
+      );
+
+      saveStatus.textContent =
+        "SAVE ERROR";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     PASSWORD AUTHENTICATION
+  ===================================================== */
+
+  function unlock() {
+
+    const entered =
+      passwordInput.value.trim();
+
+
+    console.log(
+      "Password entered. Checking..."
+    );
+
+
+    if (entered === PASSWORD) {
+
+      console.log(
+        "PASSWORD CORRECT"
+      );
+
+
+      try {
+
+        localStorage.setItem(
+          AUTH_KEY,
+          "true"
+        );
+
+      } catch (error) {
+
+        console.warn(
+          "Could not save authentication state.",
+          error
+        );
+
+      }
+
+
+      lockScreen.classList.add(
+        "hidden"
+      );
+
+      zone.classList.remove(
+        "hidden"
+      );
+
+      passwordInput.value = "";
+
+      passwordError.classList.remove(
+        "show"
+      );
+
+
+      /*
+        Make sure the planner is visible
+        immediately.
+      */
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+
+    } else {
+
+      console.log(
+        "PASSWORD INCORRECT"
+      );
+
+
+      passwordError.classList.add(
+        "show"
+      );
+
+      passwordInput.value = "";
+
+      passwordInput.focus();
+
+
+      setTimeout(() => {
+
+        passwordError.classList.remove(
+          "show"
+        );
+
+      }, 1800);
+
+    }
+
+  }
+
+
+  /* =====================================================
+     ENTER BUTTON
+  ===================================================== */
+
+  enterButton.addEventListener(
+    "click",
+    unlock
+  );
+
+
+  /* =====================================================
+     ENTER KEY
+  ===================================================== */
+
+  passwordInput.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        unlock();
+
+      }
 
     }
   );
 
 
-  return card;
-}
+  /* =====================================================
+     LOCK BUTTON
+  ===================================================== */
+
+  lockButton.addEventListener(
+    "click",
+    () => {
+
+      localStorage.removeItem(
+        AUTH_KEY
+      );
+
+      zone.classList.add(
+        "hidden"
+      );
+
+      lockScreen.classList.remove(
+        "hidden"
+      );
+
+      passwordInput.value = "";
+
+      passwordInput.focus();
+
+    }
+  );
 
 
-/* =========================================================
-   CREATE WEEK
-========================================================= */
+  /* =====================================================
+     AUTH CHECK
+  ===================================================== */
 
-function createWeek(
-  weekNumber,
-  days
-) {
+  function checkAuthentication() {
 
-  const week =
-    document.createElement("section");
+    try {
 
-  week.className = "week";
-
-
-  const header =
-    document.createElement("div");
-
-  header.className = "week-header";
+      const authenticated =
+        localStorage.getItem(
+          AUTH_KEY
+        );
 
 
-  const weekData =
-    getWeekData(weekNumber);
+      if (authenticated === "true") {
+
+        lockScreen.classList.add(
+          "hidden"
+        );
+
+        zone.classList.remove(
+          "hidden"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Authentication state unavailable.",
+        error
+      );
+
+    }
+
+  }
 
 
-  header.innerHTML = `
+  /* =====================================================
+     DATE HELPERS
+  ===================================================== */
 
-    <div class="week-number">
-      WEEK ${String(weekNumber).padStart(2, "0")}
-    </div>
+  function daysInMonth() {
 
-    <textarea
-      class="week-objective"
-      placeholder="Write this week's motto / objective..."
-    ></textarea>
+    return new Date(
+      YEAR,
+      MONTH + 1,
+      0
+    ).getDate();
 
-  `;
+  }
 
 
-  const objective =
-    header.querySelector(
-      ".week-objective"
+  function firstDayOfMonth() {
+
+    return new Date(
+      YEAR,
+      MONTH,
+      1
+    ).getDay();
+
+  }
+
+
+  /* =====================================================
+     DAY DATA
+  ===================================================== */
+
+  function getDayData(day) {
+
+    if (!plannerData.days) {
+      plannerData.days = {};
+    }
+
+
+    if (!plannerData.days[day]) {
+
+      plannerData.days[day] = {
+
+        sessions: [
+          "",
+          "",
+          ""
+        ]
+
+      };
+
+    }
+
+
+    return plannerData.days[day];
+
+  }
+
+
+  /* =====================================================
+     WEEK DATA
+  ===================================================== */
+
+  function getWeekData(weekNumber) {
+
+    if (!plannerData.weeks) {
+      plannerData.weeks = {};
+    }
+
+
+    if (!plannerData.weeks[weekNumber]) {
+
+      plannerData.weeks[weekNumber] = {
+
+        objective: ""
+
+      };
+
+    }
+
+
+    return plannerData.weeks[weekNumber];
+
+  }
+
+
+  /* =====================================================
+     DAY CARD
+  ===================================================== */
+
+  function createDayCard(day) {
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "day-card";
+
+
+    const date =
+      new Date(
+        YEAR,
+        MONTH,
+        day
+      );
+
+
+    const dayName =
+      DAY_NAMES[
+        date.getDay()
+      ];
+
+
+    const dayData =
+      getDayData(day);
+
+
+    card.innerHTML = `
+
+      <div class="day-header">
+
+        <div class="day-name">
+          ${dayName}
+        </div>
+
+        <div class="day-number">
+          ${day}
+        </div>
+
+      </div>
+
+    `;
+
+
+    SESSION_TIMES.forEach(
+      (time, index) => {
+
+        const session =
+          document.createElement(
+            "div"
+          );
+
+        session.className =
+          "session";
+
+
+        session.innerHTML = `
+
+          <div class="session-time">
+            ${time}
+          </div>
+
+          <textarea
+            placeholder="PLAN..."
+          ></textarea>
+
+        `;
+
+
+        const textarea =
+          session.querySelector(
+            "textarea"
+          );
+
+
+        textarea.value =
+          dayData.sessions[index] || "";
+
+
+        textarea.addEventListener(
+          "input",
+          () => {
+
+            dayData.sessions[index] =
+              textarea.value;
+
+            saveData();
+
+          }
+        );
+
+
+        card.appendChild(
+          session
+        );
+
+      }
     );
 
-  objective.value =
-    weekData.objective || "";
+
+    return card;
+
+  }
 
 
-  objective.addEventListener(
-    "input",
-    event => {
+  /* =====================================================
+     WEEK
+  ===================================================== */
 
-      plannerData.weeks[
+  function createWeek(
+    weekNumber,
+    days
+  ) {
+
+    const week =
+      document.createElement(
+        "section"
+      );
+
+    week.className =
+      "week";
+
+
+    const header =
+      document.createElement(
+        "div"
+      );
+
+    header.className =
+      "week-header";
+
+
+    const weekData =
+      getWeekData(
         weekNumber
-      ].objective =
-        event.target.value;
+      );
+
+
+    header.innerHTML = `
+
+      <div class="week-number">
+        WEEK ${String(
+          weekNumber
+        ).padStart(2, "0")}
+      </div>
+
+      <textarea
+        class="week-objective"
+        placeholder="Write this week's motto / objective..."
+      ></textarea>
+
+    `;
+
+
+    const objective =
+      header.querySelector(
+        ".week-objective"
+      );
+
+
+    objective.value =
+      weekData.objective || "";
+
+
+    objective.addEventListener(
+      "input",
+      () => {
+
+        weekData.objective =
+          objective.value;
+
+        saveData();
+
+      }
+    );
+
+
+    week.appendChild(
+      header
+    );
+
+
+    const grid =
+      document.createElement(
+        "div"
+      );
+
+    grid.className =
+      "days-grid";
+
+
+    days.forEach(
+      day => {
+
+        if (day === null) {
+
+          const empty =
+            document.createElement(
+              "div"
+            );
+
+          empty.className =
+            "day-card empty";
+
+          grid.appendChild(
+            empty
+          );
+
+        } else {
+
+          grid.appendChild(
+            createDayCard(day)
+          );
+
+        }
+
+      }
+    );
+
+
+    week.appendChild(
+      grid
+    );
+
+
+    return week;
+
+  }
+
+
+  /* =====================================================
+     BUILD CALENDAR
+  ===================================================== */
+
+  function buildCalendar() {
+
+    calendar.innerHTML = "";
+
+
+    const totalDays =
+      daysInMonth();
+
+
+    const firstDay =
+      firstDayOfMonth();
+
+
+    let currentDay = 1;
+
+    let weekNumber = 1;
+
+
+    while (
+      currentDay <= totalDays
+    ) {
+
+      const weekDays = [];
+
+
+      for (
+        let column = 0;
+        column < 7;
+        column++
+      ) {
+
+        /*
+          Empty cells before
+          September 1.
+        */
+
+        if (
+          weekNumber === 1 &&
+          column < firstDay
+        ) {
+
+          weekDays.push(
+            null
+          );
+
+        }
+
+        /*
+          September dates.
+        */
+
+        else if (
+          currentDay <= totalDays
+        ) {
+
+          weekDays.push(
+            currentDay
+          );
+
+          currentDay++;
+
+        }
+
+        /*
+          Empty cells after
+          September 30.
+        */
+
+        else {
+
+          weekDays.push(
+            null
+          );
+
+        }
+
+      }
+
+
+      calendar.appendChild(
+        createWeek(
+          weekNumber,
+          weekDays
+        )
+      );
+
+
+      weekNumber++;
+
+    }
+
+  }
+
+
+  /* =====================================================
+     MONTH OBJECTIVE
+  ===================================================== */
+
+  monthObjective.value =
+    plannerData.monthObjective || "";
+
+
+  monthObjective.addEventListener(
+    "input",
+    () => {
+
+      plannerData.monthObjective =
+        monthObjective.value;
 
       saveData();
 
@@ -480,153 +773,18 @@ function createWeek(
   );
 
 
-  week.appendChild(header);
+  /* =====================================================
+     START
+  ===================================================== */
+
+  buildCalendar();
+
+  checkAuthentication();
 
 
-  const grid =
-    document.createElement("div");
+  console.log(
+    "DRAVYA / ZONE initialized successfully."
+  );
 
-  grid.className = "days-grid";
+});
 
-
-  days.forEach(day => {
-
-    if (day === null) {
-
-      const empty =
-        document.createElement("div");
-
-      empty.className =
-        "day-card empty";
-
-      grid.appendChild(empty);
-
-    } else {
-
-      grid.appendChild(
-        createDayCard(day)
-      );
-
-    }
-
-  });
-
-
-  week.appendChild(grid);
-
-  return week;
-}
-
-
-/* =========================================================
-   BUILD CALENDAR
-========================================================= */
-
-function buildCalendar() {
-
-  calendar.innerHTML = "";
-
-  const daysInMonth =
-    getDaysInMonth(
-      YEAR,
-      MONTH
-    );
-
-  const firstDay =
-    getFirstDay(
-      YEAR,
-      MONTH
-    );
-
-  let currentDay = 1;
-
-  let weekNumber = 1;
-
-
-  while (
-    currentDay <= daysInMonth
-  ) {
-
-    const weekDays = [];
-
-
-    for (
-      let i = 0;
-      i < 7;
-      i++
-    ) {
-
-      /*
-        Empty cells before September 1.
-      */
-
-      if (
-        weekNumber === 1 &&
-        i < firstDay
-      ) {
-
-        weekDays.push(null);
-
-      } else if (
-        currentDay <= daysInMonth
-      ) {
-
-        weekDays.push(
-          currentDay
-        );
-
-        currentDay++;
-
-      } else {
-
-        weekDays.push(null);
-
-      }
-
-    }
-
-
-    calendar.appendChild(
-      createWeek(
-        weekNumber,
-        weekDays
-      )
-    );
-
-
-    weekNumber++;
-
-  }
-
-}
-
-
-/* =========================================================
-   MONTH OBJECTIVE
-========================================================= */
-
-monthObjective.value =
-  plannerData.monthObjective || "";
-
-
-monthObjective.addEventListener(
-  "input",
-  event => {
-
-    plannerData.monthObjective =
-      event.target.value;
-
-    saveData();
-
-  }
-);
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-buildCalendar();
-
-checkAuthentication();
-```
