@@ -1,0 +1,602 @@
+```css
+/* =========================================================
+   DRAVYA / ZONE
+   September 2026
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #05070c;
+  color: #e8edf5;
+  font-family: "Inter", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   LOCK SCREEN
+========================================================= */
+
+.lock-screen {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(40, 70, 120, 0.18),
+      transparent 45%
+    ),
+    #05070c;
+}
+
+.lock-inner {
+  width: min(650px, 100%);
+  text-align: center;
+}
+
+.lock-small {
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  color: #73819a;
+  margin-bottom: 35px;
+}
+
+.lock-inner h1 {
+  font-size: clamp(42px, 8vw, 88px);
+  line-height: 0.95;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+.lock-inner h1 span {
+  color: #7fa7d9;
+}
+
+.lock-description {
+  margin-top: 35px;
+  margin-bottom: 25px;
+
+  color: #77849a;
+  font-size: 15px;
+}
+
+.password-wrapper {
+  display: flex;
+  gap: 10px;
+
+  width: 100%;
+  max-width: 550px;
+
+  margin: auto;
+}
+
+.password-wrapper input {
+  flex: 1;
+
+  height: 58px;
+
+  border: 1px solid #252d3b;
+  background: #090c13;
+
+  color: #ffffff;
+
+  padding: 0 18px;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition: border 0.2s ease;
+}
+
+.password-wrapper input:focus {
+  border-color: #607fa8;
+}
+
+.password-wrapper button {
+  height: 58px;
+
+  padding: 0 25px;
+
+  border: 1px solid #5c7395;
+
+  background: #111927;
+
+  color: #dce8f7;
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.password-wrapper button:hover {
+  background: #172338;
+  transform: translateY(-2px);
+}
+
+.password-error {
+  margin-top: 15px;
+
+  font-size: 11px;
+  letter-spacing: 0.15em;
+
+  color: #d36b6b;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.password-error.show {
+  opacity: 1;
+}
+
+.lock-footer {
+  margin-top: 80px;
+
+  font-size: 10px;
+  letter-spacing: 0.35em;
+
+  color: #343d4d;
+}
+
+
+/* =========================================================
+   ZONE
+========================================================= */
+
+.zone {
+  width: min(1500px, 100%);
+  margin: auto;
+
+  padding: 60px 45px 80px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 30px;
+
+  padding-bottom: 45px;
+
+  border-bottom: 1px solid #1c2330;
+}
+
+.eyebrow {
+  color: #68778e;
+
+  font-size: 11px;
+  letter-spacing: 0.35em;
+
+  margin-bottom: 20px;
+}
+
+.zone-header h1 {
+  font-size: clamp(48px, 7vw, 90px);
+
+  font-weight: 500;
+
+  letter-spacing: -0.06em;
+
+  line-height: 0.9;
+}
+
+.zone-header h1 span {
+  color: #718eaf;
+  display: block;
+}
+
+
+.lock-button {
+  background: transparent;
+
+  border: 1px solid #283243;
+
+  color: #718096;
+
+  padding: 12px 17px;
+
+  font-family: inherit;
+  font-size: 10px;
+
+  letter-spacing: 0.15em;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border 0.2s ease;
+}
+
+.lock-button:hover {
+  color: #d9e2ef;
+  border-color: #61758f;
+}
+
+
+/* =========================================================
+   MONTH OBJECTIVE
+========================================================= */
+
+.section-block {
+  margin-top: 55px;
+}
+
+.section-label {
+  font-size: 10px;
+
+  color: #65738a;
+
+  letter-spacing: 0.25em;
+
+  margin-bottom: 16px;
+}
+
+.objective-input {
+  width: 100%;
+
+  min-height: 110px;
+
+  resize: vertical;
+
+  background: #080b12;
+
+  border: 1px solid #202938;
+
+  color: #e7edf5;
+
+  padding: 20px;
+
+  font-family: inherit;
+
+  font-size: 17px;
+
+  line-height: 1.6;
+
+  outline: none;
+
+  transition: border 0.2s ease;
+}
+
+.objective-input:focus {
+  border-color: #4f6685;
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+.calendar {
+  margin-top: 75px;
+}
+
+
+/* =========================================================
+   WEEK
+========================================================= */
+
+.week {
+  margin-bottom: 90px;
+}
+
+.week-header {
+  margin-bottom: 25px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #1c2330;
+}
+
+.week-number {
+  color: #7386a0;
+
+  font-size: 11px;
+
+  letter-spacing: 0.25em;
+
+  margin-bottom: 12px;
+}
+
+.week-objective {
+  width: 100%;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid #222b3a;
+
+  color: #dce5f1;
+
+  padding: 8px 0 12px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 22px;
+
+  resize: none;
+}
+
+.week-objective::placeholder {
+  color: #364153;
+}
+
+.week-objective:focus {
+  border-color: #617999;
+}
+
+
+/* =========================================================
+   DAYS
+========================================================= */
+
+.days-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(7, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   DAY CARD
+========================================================= */
+
+.day-card {
+  min-height: 390px;
+
+  background: #080b11;
+
+  border: 1px solid #1c2431;
+
+  padding: 18px;
+
+  position: relative;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.day-card:hover {
+  border-color: #344358;
+  background: #090d15;
+}
+
+.day-card.empty {
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   DAY HEADER
+========================================================= */
+
+.day-header {
+  padding-bottom: 17px;
+
+  margin-bottom: 18px;
+
+  border-bottom: 1px solid #1a2230;
+}
+
+.day-name {
+  color: #64738a;
+
+  font-size: 10px;
+
+  letter-spacing: 0.2em;
+
+  margin-bottom: 7px;
+}
+
+.day-number {
+  font-size: 28px;
+
+  font-weight: 500;
+
+  letter-spacing: -0.04em;
+}
+
+
+/* =========================================================
+   SESSIONS
+========================================================= */
+
+.session {
+  margin-bottom: 18px;
+}
+
+.session:last-child {
+  margin-bottom: 0;
+}
+
+.session-time {
+  font-size: 9px;
+
+  letter-spacing: 0.13em;
+
+  color: #58677c;
+
+  margin-bottom: 7px;
+}
+
+.session textarea {
+  width: 100%;
+
+  min-height: 72px;
+
+  resize: vertical;
+
+  background: #0b0f17;
+
+  border: 1px solid #1b2431;
+
+  color: #dce5f0;
+
+  padding: 10px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  line-height: 1.45;
+
+  transition: border 0.2s ease;
+}
+
+.session textarea:focus {
+  border-color: #4d6381;
+}
+
+.session textarea::placeholder {
+  color: #333e4f;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.zone-footer {
+  margin-top: 80px;
+
+  padding-top: 25px;
+
+  border-top: 1px solid #1c2330;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #465267;
+
+  font-size: 9px;
+
+  letter-spacing: 0.18em;
+}
+
+#save-status {
+  color: #60748e;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .days-grid {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .zone {
+    padding:
+      35px
+      18px
+      60px;
+  }
+
+  .zone-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .lock-button {
+    align-self: flex-start;
+  }
+
+  .days-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .day-card {
+    min-height: 360px;
+  }
+
+  .zone-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .password-wrapper {
+    flex-direction: column;
+  }
+
+  .password-wrapper button {
+    width: 100%;
+  }
+
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .day-card {
+    min-height: auto;
+  }
+
+  .lock-footer {
+    margin-top: 50px;
+  }
+
+}
+```
