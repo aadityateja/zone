@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>DRAVYA / ZONE</title>
+
+  <meta
+    name="description"
+    content="DRAVYA / ZONE — a private monthly planning space."
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- =========================================================
+       PASSWORD SCREEN
+  ========================================================== -->
+
+  <section id="lock-screen" class="lock-screen">
+
+    <div class="lock-inner">
+
+      <div class="lock-small">DRAVYA / PRIVATE SPACE</div>
+
+      <h1>WELCOME TO<br><span>THE ZONE</span></h1>
+
+      <p class="lock-description">
+        Enter the password to continue.
+      </p>
+
+      <div class="password-wrapper">
+        <input
+          id="password-input"
+          type="password"
+          placeholder="ENTER PASSWORD"
+          autocomplete="off"
+        />
+
+        <button id="enter-button">ENTER →</button>
+      </div>
+
+      <p id="password-error" class="password-error">
+        ACCESS DENIED
+      </p>
+
+      <div class="lock-footer">
+        OBSERVE · DISTURB · CREATE
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       MAIN ZONE
+  ========================================================== -->
+
+  <main id="zone" class="zone hidden">
+
+    <!-- HEADER -->
+
+    <header class="zone-header">
+
+      <div>
+        <div class="eyebrow">DRAVYA / ZONE</div>
+
+        <h1>
+          SEPTEMBER
+          <span>2026</span>
+        </h1>
+      </div>
+
+      <button id="lock-button" class="lock-button">
+        LOCK ZONE
+      </button>
+
+    </header>
+
+
+    <!-- MONTH OBJECTIVE -->
+
+    <section class="month-objective section-block">
+
+      <div class="section-label">
+        MONTH OBJECTIVE
+      </div>
+
+      <textarea
+        id="month-objective"
+        class="objective-input"
+        placeholder="What is the primary objective of September?"
+      ></textarea>
+
+    </section>
+
+
+    <!-- MONTH -->
+
+    <section id="calendar" class="calendar">
+
+      <!-- Javascript generates the weeks here -->
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="zone-footer">
+
+      <div>
+        DRAVYA / ZONE
+      </div>
+
+      <div id="save-status">
+        ALL CHANGES SAVED
+      </div>
+
+      <div>
+        SEPTEMBER / 2026
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
