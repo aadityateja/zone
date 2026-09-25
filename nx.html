@@ -1,0 +1,3759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAXXATRA — Master Creative & Science Lead Operating System</title>
+  <meta name="description" content="Strategic scientific-creative operating system for Naxxatra Sciences and Collaborative Research. Transforming scientific curiosity into creation.">
+  <style>
+    /* ==========================================================================
+       NAXXATRA SCIENTIFIC-CREATIVE OS — CORE DESIGN SYSTEM
+       Theme: Deep Cosmic Void, Precision Instrument, Field Notebook
+       ========================================================================== */
+    :root {
+      --bg-void: #05070c;
+      --bg-subtle: #080c14;
+      --bg-surface: #0e1524;
+      --bg-surface-elevated: #141f33;
+      --bg-glass: rgba(14, 21, 36, 0.75);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.16);
+      --border-accent: rgba(0, 229, 255, 0.4);
+
+      --cyan-bright: #00e5ff;
+      --cyan-glow: rgba(0, 229, 255, 0.25);
+      --blue-accent: #2979ff;
+      --violet-accent: #7c4dff;
+      --emerald-accent: #00e676;
+      --amber-accent: #ffd600;
+      --crimson-accent: #ff1744;
+
+      --text-primary: #f0f4fc;
+      --text-secondary: #9cb0c9;
+      --text-muted: #576d8a;
+      --text-highlight: #ffffff;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+      --radius-full: 9999px;
+
+      --transition-fast: 0.18s ease;
+      --transition-normal: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      --header-height: 64px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--bg-void);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Scientific Grid and Canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Typography & Core Elements */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-highlight);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: var(--cyan-bright);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code, .mono {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: var(--cyan-bright);
+    }
+
+    .pill-tag.purple {
+      background: rgba(124, 77, 255, 0.1);
+      border-color: rgba(124, 77, 255, 0.3);
+      color: #b388ff;
+    }
+
+    .pill-tag.green {
+      background: rgba(0, 230, 118, 0.1);
+      border-color: rgba(0, 230, 118, 0.3);
+      color: var(--emerald-accent);
+    }
+
+    .pill-tag.amber {
+      background: rgba(255, 214, 0, 0.1);
+      border-color: rgba(255, 214, 0, 0.3);
+      color: var(--amber-accent);
+    }
+
+    /* App Shell Layout */
+    .app-shell {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Telemetry & Global Header */
+    header.global-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 7, 12, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .telemetry-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 24px;
+      background: rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .telemetry-group {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .telemetry-indicator {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald-accent);
+      box-shadow: 0 0 8px var(--emerald-accent);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .header-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+    }
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-symbol {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-sm);
+      background: radial-gradient(circle, rgba(0,229,255,0.15) 0%, transparent 80%);
+      color: var(--cyan-bright);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .brand-meta h1 {
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-meta span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* Navigation Bar */
+    nav.nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    nav.nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-highlight);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-subtle);
+      text-decoration: none;
+    }
+
+    .nav-btn.active {
+      color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.06);
+      border-color: rgba(0, 229, 255, 0.25);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-trigger-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .search-trigger-btn:hover {
+      border-color: var(--cyan-bright);
+      color: var(--text-highlight);
+    }
+
+    .kbd {
+      padding: 1px 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* Reading Progress Bar */
+    .reading-progress-track {
+      width: 100%;
+      height: 2px;
+      background: transparent;
+    }
+    .reading-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan-bright), var(--violet-accent));
+      transition: width 0.1s linear;
+    }
+
+    /* Main Container */
+    main.content-canvas {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 40px 24px 120px;
+      width: 100%;
+    }
+
+    /* Section Component Architecture */
+    section.os-module {
+      margin-bottom: 96px;
+      scroll-margin-top: 100px;
+      position: relative;
+    }
+
+    .module-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 18px;
+    }
+
+    .module-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan-bright);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .module-title {
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: var(--text-highlight);
+    }
+
+    .module-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 820px;
+    }
+
+    /* Glass Panels & Scientific Cards */
+    .card-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      position: relative;
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .card-panel:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .card-panel.interactive:hover {
+      cursor: pointer;
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+
+    /* HERO: The Transformation Pipeline */
+    .hero-container {
+      padding: 48px 0 60px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 72px;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      max-width: 980px;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(120deg, #ffffff 40%, var(--cyan-bright) 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-manifesto {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 880px;
+      margin-bottom: 40px;
+      font-weight: 350;
+    }
+
+    .hero-manifesto strong {
+      color: var(--text-highlight);
+      font-weight: 600;
+    }
+
+    /* Interactive Pipeline Visualizer */
+    .pipeline-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-top: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pipeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pipeline-stepper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 4px;
+      scrollbar-width: none;
+    }
+    .pipeline-stepper::-webkit-scrollbar { display: none; }
+
+    .pipeline-step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .pipeline-step-node:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-medium);
+    }
+
+    .pipeline-step-node.active {
+      background: rgba(0, 229, 255, 0.08);
+      border-color: var(--cyan-bright);
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.15);
+    }
+
+    .pipeline-step-node .step-idx {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .pipeline-step-node.active .step-idx {
+      color: var(--cyan-bright);
+      font-weight: 600;
+    }
+
+    .pipeline-step-node .step-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+
+    .pipeline-arrow {
+      color: var(--text-muted);
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .pipeline-detail-card {
+      margin-top: 20px;
+      background: var(--bg-subtle);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .pipeline-detail-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SECTION 01: CREATIVE IDENTITY MATRIX (12 ROLES) */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .role-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .role-card:hover, .role-card.active {
+      border-color: var(--cyan-bright);
+      background: var(--bg-surface-elevated);
+      transform: translateY(-2px);
+    }
+
+    .role-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .role-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(0, 229, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-bright);
+    }
+
+    .role-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .role-focus {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .role-bridge {
+      margin-top: auto;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan-bright);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .role-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast);
+    }
+    .role-modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .role-modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      padding: 32px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close-btn:hover {
+      color: #fff;
+      border-color: var(--border-medium);
+    }
+
+    /* SECTION 02: THE NAXXATRA ECOSYSTEM & PHILOSOPHY */
+    .ecosystem-dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 900px) {
+      .ecosystem-dual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ecosystem-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+    }
+
+    .ecosystem-links {
+      display: flex;
+      gap: 14px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .external-chip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+    }
+    .external-chip-link:hover {
+      background: rgba(0, 229, 255, 0.1);
+      border-color: var(--cyan-bright);
+      color: var(--cyan-bright);
+      text-decoration: none;
+    }
+
+    /* Science Becomes: 19 Mediums Spectrum */
+    .mediums-spectrum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .medium-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    .medium-card:hover, .medium-card.active {
+      background: rgba(0, 229, 255, 0.08);
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--cyan-bright);
+      transform: translateX(4px);
+    }
+    .medium-card .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+    .medium-card.active .dot {
+      background: var(--cyan-bright);
+      box-shadow: 0 0 6px var(--cyan-bright);
+    }
+
+    /* SECTION 03: THE 8-PILLAR CREATIVE SPECTRUM */
+    .spectrum-tab-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      scrollbar-width: none;
+    }
+    .spectrum-tab-bar::-webkit-scrollbar { display: none; }
+
+    .spectrum-tab-btn {
+      padding: 10px 18px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spectrum-tab-btn:hover {
+      color: var(--text-highlight);
+      border-color: var(--border-medium);
+    }
+
+    .spectrum-tab-btn.active {
+      color: var(--cyan-bright);
+      border-color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.08);
+    }
+
+    .spectrum-display-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 32px;
+    }
+
+    /* SECTION 04: THE CONTENT ECOSYSTEM (1-TO-10 MULTIPLIER) */
+    .cascade-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .cascade-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cascade-item .index {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan-bright);
+    }
+
+    .cascade-item .title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .cascade-item .desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .comparison-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+    @media (max-width: 768px) {
+      .comparison-banner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .comparison-card {
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid;
+    }
+    .comparison-card.bad {
+      background: rgba(255, 23, 68, 0.04);
+      border-color: rgba(255, 23, 68, 0.25);
+    }
+    .comparison-card.good {
+      background: rgba(0, 230, 118, 0.04);
+      border-color: rgba(0, 230, 118, 0.25);
+    }
+
+    /* SECTION 05: RECURRING SERIES IPS */
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 480px) {
+      .series-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .series-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .series-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+
+    .series-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .series-number {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .series-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-highlight);
+    }
+
+    .series-premise {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .series-format-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.06);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      width: fit-content;
+    }
+
+    /* SECTION 06: PEDAGOGICAL MODEL & INQUIRY CHAIN */
+    .pedagogy-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 820px) {
+      .pedagogy-comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .inquiry-ladder {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .inquiry-step-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .inquiry-step-row:hover, .inquiry-step-row.active {
+      border-color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.06);
+    }
+    .inquiry-step-row .step-num {
+      font-family: var(--font-mono);
+      color: var(--cyan-bright);
+      font-size: 0.75rem;
+      min-width: 24px;
+    }
+
+    /* SECTION 07: AGE SPECTRUM PEDAGOGY */
+    .age-scale-bar {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      .age-scale-bar {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 500px) {
+      .age-scale-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .age-level-btn {
+      padding: 14px 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .age-level-btn:hover {
+      border-color: var(--border-medium);
+    }
+    .age-level-btn.active {
+      border-color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.08);
+    }
+    .age-level-btn .lvl {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--cyan-bright);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .age-level-btn .target {
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+
+    /* SECTION 08: NUCLEAR & PARTICLE PHYSICS BRIDGES */
+    .physics-bridges-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+
+    .bridges-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .bridge-chip {
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    .bridge-chip:hover {
+      border-color: var(--border-medium);
+      color: var(--text-highlight);
+    }
+    .bridge-chip.active {
+      border-color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.1);
+      color: var(--cyan-bright);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+    }
+
+    .bridge-inspector {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .bridge-inspector {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SECTION 09: HISTORY OF SCIENCE QUESTIONS */
+    .history-queries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .history-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    .history-card:hover {
+      border-color: rgba(255, 214, 0, 0.4);
+      transform: translateY(-2px);
+    }
+    .history-card .query-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--amber-accent);
+      margin-bottom: 6px;
+    }
+    .history-card .query-question {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-highlight);
+      margin-bottom: 8px;
+    }
+    .history-card .query-hint {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    /* SECTION 10: CONSTANTS & UNITS INSPECTOR */
+    .units-nav-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .constants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .constant-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .constant-btn:hover {
+      border-color: var(--border-medium);
+    }
+    .constant-btn.active {
+      border-color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.08);
+    }
+    .constant-btn .symbol {
+      font-family: var(--font-mono);
+      font-size: 1.35rem;
+      color: var(--cyan-bright);
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .constant-btn .name {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+
+    .constant-inspector-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 820px) {
+      .constant-inspector-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SECTION 11: CREATIVE MEDIUMS MATRIX */
+    .mediums-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .medium-matrix-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all var(--transition-fast);
+    }
+    .medium-matrix-card:hover {
+      border-color: var(--violet-accent);
+      transform: translateY(-2px);
+    }
+    .medium-matrix-card .duo-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #b388ff;
+      letter-spacing: 0.04em;
+    }
+    .medium-matrix-card .duo-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .medium-matrix-card .duo-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* SECTION 12: PROJECT ARCHITECTURE GENERATOR */
+    .spec-builder-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+
+    .spec-preset-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      align-items: center;
+    }
+
+    .spec-preset-btn {
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+    }
+    .spec-preset-btn:hover {
+      border-color: var(--border-medium);
+      color: #fff;
+    }
+    .spec-preset-btn.active {
+      border-color: var(--cyan-bright);
+      background: rgba(0, 229, 255, 0.1);
+      color: var(--cyan-bright);
+    }
+
+    .spec-sheet {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+    @media (max-width: 768px) {
+      .spec-sheet {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .spec-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .spec-field.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .spec-field-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cyan-bright);
+    }
+
+    .spec-field-value {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    /* SECTION 13: CONTENT ENGINE & IDEA GRAVEYARD */
+    .cadence-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .cadence-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all var(--transition-fast);
+    }
+    .cadence-block:hover {
+      border-color: var(--border-medium);
+    }
+    @media (max-width: 600px) {
+      .cadence-block {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .cadence-frequency {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan-bright);
+      min-width: 110px;
+    }
+
+    .graveyard-filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .graveyard-card-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .graveyard-item {
+      background: rgba(14, 21, 36, 0.5);
+      border: 1px dashed var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all var(--transition-fast);
+    }
+    .graveyard-item:hover {
+      border-color: var(--amber-accent);
+      background: var(--bg-surface);
+    }
+
+    /* SECTION 14: THE THREE LAYERS & SECOND ORDER DOMINO */
+    .three-layers-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .layer-bar {
+      border-radius: var(--radius-md);
+      padding: 22px 28px;
+      border: 1px solid;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
+      align-items: center;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    @media (max-width: 650px) {
+      .layer-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .layer-bar.l1 {
+      background: rgba(0, 229, 255, 0.05);
+      border-color: rgba(0, 229, 255, 0.25);
+    }
+    .layer-bar.l2 {
+      background: rgba(124, 77, 255, 0.05);
+      border-color: rgba(124, 77, 255, 0.25);
+    }
+    .layer-bar.l3 {
+      background: rgba(0, 230, 118, 0.05);
+      border-color: rgba(0, 230, 118, 0.25);
+    }
+
+    .layer-badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    /* Second-Order Chain Visualizer */
+    .second-order-stepper {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 14px 4px;
+      margin-top: 16px;
+      scrollbar-width: none;
+    }
+    .second-order-stepper::-webkit-scrollbar { display: none; }
+
+    .domino-node {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      white-space: nowrap;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .domino-node .arrow {
+      color: var(--cyan-bright);
+    }
+
+    /* SECTION 15: OPERATIONAL PLAYBOOKS */
+    .playbooks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .playbook-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .playbook-step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .playbook-step-list li {
+      font-size: 0.85rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-secondary);
+    }
+
+    .playbook-step-list li strong {
+      color: var(--text-highlight);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      min-width: 20px;
+    }
+
+    /* SECTION 16: SCIENTIFIC RIGOUR MATRIX */
+    .rigour-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .rigour-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rigour-status {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* SECTION 17: THE NAXXATRA PRINCIPLE & 7 QUESTIONS */
+    .principle-banner {
+      background: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.12) 0%, rgba(14, 21, 36, 0.95) 75%);
+      border: 1px solid var(--cyan-bright);
+      border-radius: var(--radius-lg);
+      padding: 48px 36px;
+      text-align: center;
+      margin-bottom: 40px;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.12);
+    }
+
+    .principle-axiom {
+      font-size: clamp(1.2rem, 3vw, 1.85rem);
+      font-weight: 700;
+      line-height: 1.4;
+      color: #ffffff;
+      max-width: 900px;
+      margin: 0 auto 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .mindset-seven-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .mindset-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all var(--transition-fast);
+    }
+    .mindset-card:hover {
+      border-color: var(--cyan-bright);
+      transform: translateY(-2px);
+    }
+    .mindset-card .num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--cyan-bright);
+    }
+    .mindset-card .question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-highlight);
+    }
+    .mindset-card .rationale {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* Global Search & Navigator Modal */
+    .search-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 500;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 80px 20px 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast);
+    }
+    .search-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .search-modal {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 640px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .search-input-wrapper {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 12px;
+    }
+
+    .search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 1.1rem;
+      width: 100%;
+      font-family: var(--font-sans);
+    }
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-results-list {
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 10px;
+      list-style: none;
+    }
+
+    .search-result-item {
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: background var(--transition-fast);
+    }
+    .search-result-item:hover, .search-result-item.selected {
+      background: rgba(0, 229, 255, 0.08);
+    }
+    .search-result-item .item-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-highlight);
+    }
+    .search-result-item .item-meta {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Footer */
+    footer.global-footer {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border-subtle);
+      padding: 64px 24px;
+      margin-top: 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-content {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .footer-pipeline-ticker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+    .footer-pipeline-ticker span.highlight {
+      color: var(--cyan-bright);
+      font-weight: 600;
+    }
+
+    .footer-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+    }
+
+    /* Accessibility / Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Dynamic Physics Canvas Backdrop -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="grid-overlay"></div>
+
+  <div class="app-shell">
+    
+    <!-- Top System Telemetry & Header -->
+    <header class="global-header">
+      <div class="telemetry-bar">
+        <div class="telemetry-group">
+          <span class="telemetry-indicator"></span>
+          <span>NAXXATRA CORE // SCIENCE & CREATIVE LEAD OS</span>
+          <span class="mono" id="live-time">UTC: --:--:--</span>
+        </div>
+        <div class="telemetry-group">
+          <span class="mono">STATUS: OPERATIONAL</span>
+          <span class="mono">COORD: 28°36'N 77°12'E</span>
+          <span class="mono">DETECTOR: ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="header-main">
+        <a href="#hero" class="brand-cluster">
+          <div class="brand-symbol">N★</div>
+          <div class="brand-meta">
+            <h1>Naxxatra <span>Sciences & Collaborative Research</span></h1>
+          </div>
+        </a>
+
+        <nav class="nav-links" id="main-nav">
+          <a href="#hero" class="nav-btn active">00. Origin</a>
+          <a href="#identity" class="nav-btn">01. Identity</a>
+          <a href="#ecosystem" class="nav-btn">02. Ecosystem</a>
+          <a href="#spectrum" class="nav-btn">03. Spectrum</a>
+          <a href="#content-cascade" class="nav-btn">04. Cascade</a>
+          <a href="#series" class="nav-btn">05. Series IP</a>
+          <a href="#pedagogy" class="nav-btn">06. Inquiry</a>
+          <a href="#age-ladder" class="nav-btn">07. Audience</a>
+          <a href="#physics-bridges" class="nav-btn">08. Bridges</a>
+          <a href="#history" class="nav-btn">09. History</a>
+          <a href="#constants" class="nav-btn">10. Constants</a>
+          <a href="#mediums" class="nav-btn">11. Mediums</a>
+          <a href="#spec-builder" class="nav-btn">12. Architecture</a>
+          <a href="#pipeline" class="nav-btn">13. Pipeline</a>
+          <a href="#playbooks" class="nav-btn">14. Playbooks</a>
+          <a href="#rigour" class="nav-btn">15. Rigour</a>
+          <a href="#mindset" class="nav-btn">16. Mindset</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="search-trigger-btn" id="open-search-btn" title="Search Operating System (Press /)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span>Search</span>
+            <span class="kbd">/</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="reading-progress-track">
+        <div class="reading-progress-bar" id="progress-bar"></div>
+      </div>
+    </header>
+
+    <!-- Content Workspace Canvas -->
+    <main class="content-canvas">
+
+      <!-- HERO / ORIGIN SECTION -->
+      <section class="hero-container" id="hero">
+        <div class="hero-badge-row">
+          <span class="pill-tag">Science Lead & Content Head Operating System</span>
+          <span class="pill-tag purple">M.Sc. Physics // Nuclear & Particle Specialization</span>
+          <span class="pill-tag green">Living Scientific-Creative Ecosystem</span>
+        </div>
+
+        <h1 class="hero-title">
+          Scientific Curiosity <br>
+          <span class="gradient-text">→ Creation & Living Experience</span>
+        </h1>
+
+        <p class="hero-manifesto">
+          At <strong>Naxxatra Sciences and Collaborative Research</strong>, science is not a museum of finished facts, a rote textbook lecture, or an algorithm-chasing social carousel. We operate as <strong>scientists who create</strong>—transforming fundamental physics, astronomy, instrumentation, and mathematics into palpable stories, soundscapes, simulations, and real participatory investigations.
+        </p>
+
+        <!-- Interactive 8-Stage Pipeline Stepper -->
+        <div class="pipeline-container">
+          <div class="pipeline-header">
+            <div>
+              <span class="pill-tag">Central Transformation Engine</span>
+              <h2 style="font-size: 1.25rem; margin-top: 6px;">The 8-Stage Idea Mutation Lifecycle</h2>
+            </div>
+            <span class="mono" style="font-size: 0.75rem; color: var(--text-muted);">CLICK ANY STAGE TO INSPECT TRANSFORMATION</span>
+          </div>
+
+          <div class="pipeline-stepper" id="pipeline-stepper">
+            <!-- Injected by JS -->
+          </div>
+
+          <div class="pipeline-detail-card" id="pipeline-detail-view">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 01: MY CREATIVE IDENTITY (12 ROLES) -->
+      <section class="os-module" id="identity">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>01 // PERSONA & RESEARCH ARCHITECTURE</span>
+            <span class="mono">CORE FACETS: 12</span>
+          </div>
+          <h2 class="module-title">The Creative-Scientific Identity</h2>
+          <p class="module-desc">
+            Operating as a scientist who creates. Built on a Master’s degree in Physics with nuclear and particle physics specialization—including research on neutron-induced hadronic shower development in a Zero Degree Calorimeter (ZDC) for the Electron-Ion Collider (EIC) using machine learning.
+          </p>
+        </div>
+
+        <div class="roles-grid" id="roles-grid">
+          <!-- Populated by JS with 12 distinct facets -->
+        </div>
+      </section>
+
+      <!-- SECTION 02: THE NAXXATRA ECOSYSTEM & CORE PHILOSOPHY -->
+      <section class="os-module" id="ecosystem">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>02 // INSTITUTIONAL CONTEXT & FIRST PRINCIPLES</span>
+          </div>
+          <h2 class="module-title">The Naxxatra Ecosystem & Experience Engine</h2>
+          <p class="module-desc">
+            Naxxatra works at the intersection of astrophysics, radio astronomy, observational instrumentation, data-driven science, mentorship, and creative student exploration.
+          </p>
+        </div>
+
+        <div class="ecosystem-dual-grid">
+          <div class="ecosystem-box">
+            <span class="pill-tag green">Institutional Context</span>
+            <h3 style="font-size: 1.25rem; margin: 12px 0;">Naxxatra Sciences & Collaborative Research</h3>
+            <p>
+              Naxxatra is a living platform designed to dismantle the barrier between formal scientific research and student discovery. We provide research exposure, project-based inquiry, hardware fabrication, and deep mentorship across multiple disciplines.
+            </p>
+            <div class="ecosystem-links">
+              <a href="https://www.naxxatra.com/" target="_blank" rel="noopener noreferrer" class="external-chip-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span>Official Website: naxxatra.com</span>
+              </a>
+              <a href="https://youtube.com/@naxxatrasciences" target="_blank" rel="noopener noreferrer" class="external-chip-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                <span>YouTube: @naxxatrasciences</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="ecosystem-box" style="border-color: rgba(0, 229, 255, 0.3);">
+            <span class="pill-tag">Core Creative Axiom</span>
+            <h3 style="font-size: 1.25rem; margin: 12px 0; color: var(--cyan-bright);">"What can we make someone experience?"</h3>
+            <p>
+              Never ask only <em>"What can we teach?"</em>. Rote instruction leaves facts forgotten. An experience permanently rewires human intuition. Science must become felt, measured, built, heard, or questioned before it can be truly understood.
+            </p>
+            <div style="margin-top: 16px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);">
+              NOT: Definition → Notes → Exam<br>
+              BUT: Question → Curiosity → Observation → Experiment → Creation
+            </div>
+          </div>
+        </div>
+
+        <!-- 19 Mediums Spectrum Grid -->
+        <div class="card-panel">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="font-size: 1.1rem;">Science As A Living Medium</h3>
+            <span class="mono" style="font-size: 0.75rem; color: var(--cyan-bright);">19 FORMS OF EXPRESSION</span>
+          </div>
+          <p style="font-size: 0.88rem; margin-bottom: 16px;">
+            In Naxxatra, a single scientific inquiry is translated into the sensory and participatory medium that best evokes its deeper truth:
+          </p>
+          <div class="mediums-spectrum-grid" id="mediums-spectrum-grid">
+            <!-- 19 interactive cards injected by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 03: THE 8-PILLAR CREATIVE SPECTRUM -->
+      <section class="os-module" id="spectrum">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>03 // THE MULTI-DIMENSIONAL INQUIRY LENS</span>
+          </div>
+          <h2 class="module-title">The Naxxatra Creative Spectrum</h2>
+          <p class="module-desc">
+            Whenever a scientific question arises, interrogate it across eight orthogonal dimensions. Never allow a concept to remain a flat, one-dimensional lecture.
+          </p>
+        </div>
+
+        <div class="spectrum-tab-bar" id="spectrum-tab-bar">
+          <!-- 8 Tabs injected by JS -->
+        </div>
+
+        <div class="spectrum-display-box" id="spectrum-display-box">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION 04: THE CONTENT ECOSYSTEM (1-TO-10 MULTIPLIER) -->
+      <section class="os-module" id="content-cascade">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>04 // CONTENT MULTIPLIER & SYSTEM ARCHITECTURE</span>
+          </div>
+          <h2 class="module-title">The One-Idea Ecosystem Cascade</h2>
+          <p class="module-desc">
+            Do not create isolated content. Create self-reinforcing content ecosystems where one single profound scientific question branches into ten distinct artifacts.
+          </p>
+        </div>
+
+        <div class="cascade-flow" id="cascade-flow">
+          <!-- 10 cascade nodes injected by JS -->
+        </div>
+
+        <!-- Case Study: The Last Signal -->
+        <div class="comparison-banner">
+          <div class="comparison-card bad">
+            <span class="pill-tag" style="background: rgba(255,23,68,0.1); border-color: rgba(255,23,68,0.3); color: var(--crimson-accent);">The Generic Failure</span>
+            <h4 style="margin: 10px 0; font-size: 1.05rem;">"Black Hole Workshop" / "Black Hole Carousel"</h4>
+            <p style="font-size: 0.85rem;">
+              Recites textbook definitions of the event horizon, Schwarzschild radius formula ($r_s = 2GM/c^2$), and shows artist impressions. Participants are passive spectators memorizing trivia for an arbitrary quiz.
+            </p>
+          </div>
+
+          <div class="comparison-card good">
+            <span class="pill-tag green">The Naxxatra Ecosystem Model</span>
+            <h4 style="margin: 10px 0; font-size: 1.05rem;">"THE LAST SIGNAL" — Dual Observer Infall</h4>
+            <p style="font-size: 0.85rem;">
+              Participants split into dual roles: Infalling Observer vs Distant Stationary Observer. They simulate the exact photon redshift, gravitational time dilation, and coordinate singularity in Python. They experience the paradox: One crosses the horizon in finite proper time; the other never sees them cross in infinite coordinate time.
+            </p>
+            <div style="margin-top: 10px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--cyan-bright);">
+              OUTPUT: Code repo + Narrative Short Film + High School Lab + Sonified Doppler Track
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 05: RECURRING SERIES IPS -->
+      <section class="os-module" id="series">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>05 // INTELLECTUAL PROPERTY & FLAGSHIP FORMATS</span>
+          </div>
+          <h2 class="module-title">Recurring Naxxatra Series IPs</h2>
+          <p class="module-desc">
+            Never produce random, disjointed videos. Build recognized franchises and intellectual properties with distinctive formats, recurring motifs, and deep narrative arcs.
+          </p>
+        </div>
+
+        <div class="series-grid" id="series-grid">
+          <!-- 9 Series cards injected by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION 06: PEDAGOGY: INQUIRY CYCLE VS CONVENTIONAL TRAP -->
+      <section class="os-module" id="pedagogy">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>06 // EDUCATIONAL PARADIGM SHIFT</span>
+          </div>
+          <h2 class="module-title">The 10-Step Inquiry Cycle</h2>
+          <p class="module-desc">
+            We dismantle the rote sequence of Definition → Notes → Exam. Discovery follows the natural epistemological arc of how human beings actually uncovered the universe.
+          </p>
+        </div>
+
+        <div class="pedagogy-comparison">
+          <div class="card-panel" style="border-color: rgba(255, 23, 68, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="pill-tag" style="color: var(--crimson-accent); border-color: rgba(255,23,68,0.4); background: rgba(255,23,68,0.06);">The Conventional Trap</span>
+              <span class="mono" style="font-size: 0.72rem; color: var(--text-muted);">PASSIVE CONFINEMENT</span>
+            </div>
+            <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 16px;">
+              <div style="padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--crimson-accent);">
+                <strong>1. DEFINITION</strong>
+                <p style="font-size: 0.8rem; margin: 4px 0 0;">Student is handed an abstract sentence to memorize before observing anything.</p>
+              </div>
+              <div style="padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--crimson-accent);">
+                <strong>2. NOTES</strong>
+                <p style="font-size: 0.8rem; margin: 4px 0 0;">Copying solved derivations from a blackboard without grasping why the question mattered.</p>
+              </div>
+              <div style="padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--crimson-accent);">
+                <strong>3. EXAM</strong>
+                <p style="font-size: 0.8rem; margin: 4px 0 0;">Regurgitating formulas under time pressure; curiosity and wonder are completely eliminated.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel" style="border-color: rgba(0, 229, 255, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="pill-tag green">The Naxxatra Inquiry Cycle</span>
+              <span class="mono" style="font-size: 0.72rem; color: var(--cyan-bright);">EPISTEMIC SEQUENCE: 10 STEPS</span>
+            </div>
+            <div class="inquiry-ladder" id="inquiry-ladder">
+              <!-- 10 Inquiry steps injected by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 07: AGE SPECTRUM PEDAGOGY -->
+      <section class="os-module" id="age-ladder">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>07 // MULTI-TIER PEDAGOGICAL SCALING</span>
+          </div>
+          <h2 class="module-title">The Six-Level Age Spectrum</h2>
+          <p class="module-desc">
+            One single fundamental idea can be explored across all six tiers of human comprehension—from sensory wonder for a seven-year-old child to tensor calculus and Monte Carlo shower simulation for advanced researchers.
+          </p>
+        </div>
+
+        <div class="age-scale-bar" id="age-scale-bar">
+          <!-- 6 Levels injected by JS -->
+        </div>
+
+        <div class="card-panel" id="age-level-content" style="border-color: var(--border-accent);">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION 08: NUCLEAR & PARTICLE PHYSICS BRIDGES -->
+      <section class="os-module" id="physics-bridges">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>08 // SUBATOMIC TO COSMOLOGICAL INTERSECTION</span>
+          </div>
+          <h2 class="module-title">Nuclear & Particle Physics Bridges</h2>
+          <p class="module-desc">
+            Infusing my research background in nuclear physics, hadronic showers (EIC-ZDC), calorimetry, and machine learning into Naxxatra’s astronomical core. Subatomic interactions are the physical engine of stellar nucleosynthesis and high-energy astrophysics.
+          </p>
+        </div>
+
+        <div class="physics-bridges-container">
+          <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span class="mono" style="font-size: 0.75rem; color: var(--cyan-bright);">INTERACTIVE CONSTELLATION: 22 BRIDGES</span>
+            <span class="mono" style="font-size: 0.72rem; color: var(--text-muted);">SELECT TO INSPECT ASTROPHYSICAL COUPLING</span>
+          </div>
+
+          <div class="bridges-cloud" id="bridges-cloud">
+            <!-- 22 Bridge chips injected by JS -->
+          </div>
+
+          <div class="bridge-inspector" id="bridge-inspector">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 09: HISTORY OF SCIENCE INVESTIGATION -->
+      <section class="os-module" id="history">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>09 // EPISTEMOLOGY & THE HUMAN STRUGGLE</span>
+          </div>
+          <h2 class="module-title">The 10 Forensic Inquiries</h2>
+          <p class="module-desc">
+            <em>"Why did humans decide that this was the way to describe nature?"</em> We explore science as an intensely human, turbulent battle against cognitive bias, technological limits, and mathematical dead ends.
+          </p>
+        </div>
+
+        <div class="history-queries-grid" id="history-queries-grid">
+          <!-- 10 Forensic questions injected by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION 10: CONSTANTS & UNITS MATRIX -->
+      <section class="os-module" id="constants">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>10 // METROLOGY & THE 2019 SI REVOLUTION</span>
+          </div>
+          <h2 class="module-title">Fundamental Constants & Base Units</h2>
+          <p class="module-desc">
+            How humanity shifted from arbitrary physical artifacts (like the platinum-iridium cylinder in Paris) to fixing the fundamental constants of the cosmos to define reality itself.
+          </p>
+        </div>
+
+        <div class="units-nav-tabs">
+          <button class="pill-tag active" id="tab-constants-btn" style="cursor: pointer;">10 Fundamental Constants</button>
+          <button class="pill-tag" id="tab-units-btn" style="cursor: pointer; background: transparent; color: var(--text-secondary); border-color: var(--border-subtle);">7 Base SI Units</button>
+        </div>
+
+        <div class="constants-grid" id="constants-grid">
+          <!-- Constants or Units injected by JS -->
+        </div>
+
+        <div class="constant-inspector-panel" id="constant-inspector-panel">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION 11: CREATIVE MEDIUMS MATRIX -->
+      <section class="os-module" id="mediums">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>11 // ARTISTIC-SCIENTIFIC SYNERGY</span>
+          </div>
+          <h2 class="module-title">The Creative Mediums Matrix</h2>
+          <p class="module-desc">
+            Deploying music, Blender 3D, narrative cinema, procedural WebGL, physical installations, and community protocols as rigorous engines for scientific discovery.
+          </p>
+        </div>
+
+        <div class="mediums-matrix-grid" id="mediums-matrix-grid">
+          <!-- 7 Matrix cards injected by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION 12: PROJECT ARCHITECTURE GENERATOR -->
+      <section class="os-module" id="spec-builder">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>12 // PROJECT ARCHITECTURE & SPECIFICATION ENGINE</span>
+          </div>
+          <h2 class="module-title">The 14-Field Project Builder</h2>
+          <p class="module-desc">
+            Every serious Naxxatra initiative is architected as an executable scientific specification. Browse flagship prototypes or create your own project blueprint.
+          </p>
+        </div>
+
+        <div class="spec-builder-container">
+          <div class="spec-preset-bar">
+            <span class="mono" style="font-size: 0.75rem; color: var(--text-muted); margin-right: 8px;">FLAGSHIP PRESETS:</span>
+            <button class="spec-preset-btn active" data-preset="last-signal">01. The Last Signal (Relativity & VR)</button>
+            <button class="spec-preset-btn" data-preset="muon-cloud">02. Muon-Net (Cloud Chamber & ML)</button>
+            <button class="spec-preset-btn" data-preset="kibble-balance">03. The Kibble Project (Planck Constant)</button>
+          </div>
+
+          <div class="spec-sheet" id="spec-sheet-display">
+            <!-- 14 fields rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 13: CONTENT ENGINE & IDEA GRAVEYARD -->
+      <section class="os-module" id="pipeline">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>13 // OPERATIONAL PIPELINE & INCUBATOR</span>
+          </div>
+          <h2 class="module-title">Content Cadence & Idea Incubator</h2>
+          <p class="module-desc">
+            Organizing output across five temporal cadences while maintaining an archival "Graveyard" of high-risk, ambitious concepts waiting for the right moment.
+          </p>
+        </div>
+
+        <h3 style="font-size: 1.1rem; margin-bottom: 16px;">The 5-Cadence Content Engine</h3>
+        <div class="cadence-timeline">
+          <div class="cadence-block">
+            <div class="cadence-frequency">DAILY</div>
+            <div style="flex: 1;">
+              <strong>Micro-Observations & Curiosities</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">An everyday measurement anomaly, a single mathematical paradox, or an optical oddity.</p>
+            </div>
+            <span class="pill-tag">Quick Spark</span>
+          </div>
+
+          <div class="cadence-block">
+            <div class="cadence-frequency">WEEKLY</div>
+            <div style="flex: 1;">
+              <strong>One Substantial Scientific Communication</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">An investigative video essay, interactive code sandbox, or in-depth field notebook entry.</p>
+            </div>
+            <span class="pill-tag green">Anchor Output</span>
+          </div>
+
+          <div class="cadence-block">
+            <div class="cadence-frequency">MONTHLY</div>
+            <div style="flex: 1;">
+              <strong>Major Creative/Scientific Project</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">A full public workshop, open data-release, experimental simulation release, or guest research salon.</p>
+            </div>
+            <span class="pill-tag purple">Deep Dive</span>
+          </div>
+
+          <div class="cadence-block">
+            <div class="cadence-frequency">QUARTERLY</div>
+            <div style="flex: 1;">
+              <strong>Flagship Immersive Experience</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">A multi-day hackathon, astronomical expedition, museum/gallery installation, or collaborative cohort project.</p>
+            </div>
+            <span class="pill-tag amber">Institutional Milestone</span>
+          </div>
+
+          <div class="cadence-block">
+            <div class="cadence-frequency">ANNUALLY</div>
+            <div style="flex: 1;">
+              <strong>Naxxatra Flagship Festival / Peer-Reviewed Research Paper</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">Major intellectual property, student research symposium, hardware showcase, or published paper.</p>
+            </div>
+            <span class="pill-tag" style="color: #fff; border-color: #fff;">Legacy IP</span>
+          </div>
+        </div>
+
+        <!-- The Idea Graveyard -->
+        <div class="card-panel" style="margin-top: 36px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="pill-tag amber">Preservation Archive</span>
+              <h3 style="font-size: 1.15rem; margin-top: 6px;">The Idea Graveyard</h3>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); max-width: 500px;">
+              Good ideas should never be deleted. They are archived with precise blockers until technological, financial, or collaborative conditions align.
+            </p>
+          </div>
+
+          <div class="graveyard-filter-bar" id="graveyard-filter-bar">
+            <!-- Filter buttons injected by JS -->
+          </div>
+
+          <div class="graveyard-card-list" id="graveyard-card-list">
+            <!-- Graveyard items injected by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 14: THE THREE LAYERS & SECOND ORDER DOMINO THINKING -->
+      <section class="os-module" id="layers-and-chains">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>14 // DEPTH ARCHITECTURE & CASCADING REACTION</span>
+          </div>
+          <h2 class="module-title">The Three Layers & Second-Order Dominoes</h2>
+          <p class="module-desc">
+            Ensuring every creation caters simultaneously to wonder, physical mechanism, and advanced mathematical depth—while mapping out the multi-year second-order ripple effects.
+          </p>
+        </div>
+
+        <h3 style="font-size: 1.1rem; margin-bottom: 16px;">The Three Layers System</h3>
+        <div class="three-layers-stack">
+          <div class="layer-bar l1">
+            <div class="layer-badge" style="color: var(--cyan-bright);">01 // WONDER</div>
+            <div>
+              <strong style="color: #fff; font-size: 0.95rem;">Sensory & Phenomenological Spark (Anyone Can Engage)</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">
+                The immediate visual, auditory, or visceral phenomenon. Ghostly vapor trails in chilled alcohol vapor, light bending through water, or the heartbeat pulse of a pulsar.
+              </p>
+            </div>
+          </div>
+
+          <div class="layer-bar l2">
+            <div class="layer-badge" style="color: #b388ff;">02 // SCIENCE</div>
+            <div>
+              <strong style="color: #fff; font-size: 0.95rem;">Empirical Mechanisms & Physical Laws</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">
+                Ionization along particle tracks, Bethe-Bloch stopping power, supersaturation gradients, and relativistic muon lifetime dilation in the atmosphere.
+              </p>
+            </div>
+          </div>
+
+          <div class="layer-bar l3">
+            <div class="layer-badge" style="color: var(--emerald-accent);">03 // DEPTH</div>
+            <div>
+              <strong style="color: #fff; font-size: 0.95rem;">Mathematics, Computation & Active Research</strong>
+              <p style="font-size: 0.85rem; margin: 4px 0 0;">
+                Quantum electrodynamics cross-sections, Monte Carlo GEANT4 hadronic simulations, convolutional neural network track reconstruction, and cosmological neutrino fluxes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second-Order Chain: The Cloud Chamber Domino -->
+        <div class="card-panel">
+          <span class="pill-tag green">Second-Order Multiplier Example</span>
+          <h3 style="font-size: 1.15rem; margin: 10px 0 6px;">The Cloud Chamber Domino Chain</h3>
+          <p style="font-size: 0.85rem;">
+            When someone says <em>"Let's build a cloud chamber,"</em> never stop at observing mist. Unleash the chain:
+          </p>
+
+          <div class="second-order-stepper" id="second-order-stepper">
+            <!-- 11 Domino nodes injected by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 15: OPERATIONAL PLAYBOOKS FOR THE SCIENCE LEAD -->
+      <section class="os-module" id="playbooks">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>15 // PROTOCOLS & RESPONSE BLUEPRINTS</span>
+          </div>
+          <h2 class="module-title">Operational Playbooks</h2>
+          <p class="module-desc">
+            Standard operating protocols for strategic guidance, raw idea incubation, narrative cinematic arcs, and workshop experiential design.
+          </p>
+        </div>
+
+        <div class="playbooks-grid">
+          <!-- Playbook 1 -->
+          <div class="playbook-card">
+            <span class="pill-tag">Trigger: "I Have An Idea"</span>
+            <h4 style="font-size: 1.05rem;">The 7-Step Deconstruction Blueprint</h4>
+            <ul class="playbook-step-list">
+              <li><strong>01</strong> <span><strong>My Raw Idea:</strong> Restate with absolute clarity.</span></li>
+              <li><strong>02</strong> <span><strong>Deeper Question:</strong> What fundamental question are we actually investigating?</span></li>
+              <li><strong>03</strong> <span><strong>Scientific Core:</strong> What rigorous laws or mechanisms sit underneath?</span></li>
+              <li><strong>04</strong> <span><strong>Creative Possibility:</strong> What sensory or experiential medium fits it best?</span></li>
+              <li><strong>05</strong> <span><strong>Naxxatra Version:</strong> How does Naxxatra execute this collaboratively?</span></li>
+              <li><strong>06</strong> <span><strong>First Prototype:</strong> What functional test can be built in 1–7 days?</span></li>
+              <li><strong>07</strong> <span><strong>Long-Term Vision:</strong> What flagship initiative could this become in 3–12 months?</span></li>
+            </ul>
+          </div>
+
+          <!-- Playbook 2 -->
+          <div class="playbook-card">
+            <span class="pill-tag purple">Trigger: "What Should I Do?"</span>
+            <h4 style="font-size: 1.05rem;">The Strategic Compass Protocol</h4>
+            <ul class="playbook-step-list">
+              <li><strong>01</strong> <span><strong>Direction Identification:</strong> Identify the overarching intellectual trajectory.</span></li>
+              <li><strong>02</strong> <span><strong>3–5 Possibilities:</strong> Provide high-conviction, distinctive pathways.</span></li>
+              <li><strong>03</strong> <span><strong>Scientific Meaning:</strong> State why each is epistemologically profound.</span></li>
+              <li><strong>04</strong> <span><strong>Creative Distinction:</strong> State what makes each visually and narrative unique.</span></li>
+              <li><strong>05</strong> <span><strong>Output Classification:</strong> Map to workshop, paper, IP, or film.</span></li>
+              <li><strong>06</strong> <span><strong>Concrete Next Action:</strong> Deliver the immediate executable next move.</span></li>
+            </ul>
+          </div>
+
+          <!-- Playbook 3 -->
+          <div class="playbook-card">
+            <span class="pill-tag green">Storytelling Engine</span>
+            <h4 style="font-size: 1.05rem;">Scientific Cinematic Arc</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--cyan-bright); line-height: 1.8;">
+              HOOK → QUESTION → MYSTERY → SCIENCE → VISUALIZATION → EXPERIMENT / EVIDENCE → REALIZATION → OPEN QUESTION
+            </div>
+            <p style="font-size: 0.82rem; margin-top: 10px;">
+              Eliminates Wikipedia-style narration. Replaces it with the suspense of an ongoing physical investigation.
+            </p>
+          </div>
+
+          <!-- Playbook 4 -->
+          <div class="playbook-card">
+            <span class="pill-tag amber">Workshop Engine</span>
+            <h4 style="font-size: 1.05rem;">The Experiential Workshop Arc</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--amber-accent); line-height: 1.8;">
+              QUESTION → DO → OBSERVE → MEASURE → THINK → EXPLAIN → CREATE
+            </div>
+            <p style="font-size: 0.82rem; margin-top: 10px;">
+              Every participant leaves having actually <em>done</em> science with their own hands and mind, not merely listened to an academic monologue.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 16: SCIENTIFIC RIGOUR MATRIX -->
+      <section class="os-module" id="rigour">
+        <div class="module-header">
+          <div class="module-eyebrow">
+            <span>16 // EPISTEMIC INTEGRITY & QUALITY CONTROL</span>
+          </div>
+          <h2 class="module-title">The Scientific Rigour Spectrum</h2>
+          <p class="module-desc">
+            Creativity must never blur into pseudoscience. For every project, statement, and visual metaphor, we enforce clear cognitive demarcation.
+          </p>
+        </div>
+
+        <div class="rigour-matrix-grid">
+          <div class="rigour-card" style="border-color: rgba(0, 230, 118, 0.4);">
+            <div class="rigour-status" style="color: var(--emerald-accent);">01. Established Science</div>
+            <p style="font-size: 0.82rem;">Empirically verified, peer-reviewed physical laws (e.g. Maxwell's equations, general relativity in weak fields, QED).</p>
+          </div>
+
+          <div class="rigour-card" style="border-color: rgba(0, 229, 255, 0.4);">
+            <div class="rigour-status" style="color: var(--cyan-bright);">02. Active Research</div>
+            <p style="font-size: 0.82rem;">Ongoing experimental inquiries with competing models (e.g. neutrino mass hierarchy, dark matter candidates, EIC hadronic showers).</p>
+          </div>
+
+          <div class="rigour-card" style="border-color: rgba(41, 121, 255, 0.4);">
+            <div class="rigour-status" style="color: var(--blue-accent);">03. Hypothesis</div>
+            <p style="font-size: 0.82rem;">Mathematically consistent proposals awaiting falsifiable empirical tests (e.g. sterile neutrinos, axions, modified gravity).</p>
+          </div>
+
+          <div class="rigour-card" style="border-color: rgba(255, 214, 0, 0.4);">
+            <div class="rigour-status" style="color: var(--amber-accent);">04. Speculation</div>
+            <p style="font-size: 0.82rem;">Theoretical extrapolations at boundaries of knowledge (e.g. multiverse topologies, holographic principle, wormholes).</p>
+          </div>
+
+          <div class="rigour-card" style="border-color: rgba(124, 77, 255, 0.4);">
+            <div class="rigour-status" style="color: var(--violet-accent);">05. Metaphor</div>
+            <p style="font-size: 0.82rem;">Analogies used to build intuition (e.g. rubber sheet spacetime, particle wave packets as vibrating strings). Always explicitly labeled.</p>
+          </div>
+
+          <div class="rigour-card" style="border-color: rgba(255, 255, 255, 0.3);">
+            <div class="rigour-status" style="color: #ffffff;">06. Artistic Interpretation</div>
+            <p style="font-size: 0.82rem;">Sensory, emotional, or philosophical resonance inspired by science without claiming physical equivalence.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 17: THE NAXXATRA PRINCIPLE & THE 7 DEFAULT QUESTIONS -->
+      <section class="os-module" id="mindset">
+        <div class="principle-banner">
+          <span class="pill-tag" style="margin-bottom: 12px; background: rgba(0,229,255,0.15);">THE CARDINAL AXIOM</span>
+          <div class="principle-axiom">
+            "Can this become something people can see, touch, hear, build, measure, question, or investigate?"
+          </div>
+          <p style="color: var(--text-secondary); max-width: 680px; margin: 0 auto; font-size: 0.95rem;">
+            If the answer is yes, we build it. If the answer is no, we re-engineer the inquiry until it acquires sensory, mathematical, and experimental form.
+          </p>
+        </div>
+
+        <div class="module-header" style="border-bottom: none; margin-bottom: 20px;">
+          <div class="module-eyebrow">
+            <span>THE 7 DEFAULT MINDSET QUESTIONS</span>
+          </div>
+          <h3 style="font-size: 1.3rem;">The Lead's Cognitive Checklist</h3>
+        </div>
+
+        <div class="mindset-seven-grid" id="mindset-seven-grid">
+          <!-- 7 Mindset questions injected by JS -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="global-footer">
+      <div class="footer-content">
+        <div class="footer-pipeline-ticker">
+          <span class="highlight">THOUGHT</span> →
+          <span class="highlight">CONCEPT</span> →
+          <span class="highlight">EXPERIMENT</span> →
+          <span class="highlight">EXPERIENCE</span> →
+          <span class="highlight">CONTENT</span> →
+          <span class="highlight">PROJECT</span> →
+          <span class="highlight">COMMUNITY</span> →
+          <span class="highlight">RESEARCH</span>
+        </div>
+
+        <div style="text-align: center;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 8px;">NAXXATRA</h2>
+          <p style="color: var(--cyan-bright); font-family: var(--font-mono); font-size: 0.9rem;">
+            Scientific curiosity can become creation.
+          </p>
+        </div>
+
+        <div class="footer-bottom-row">
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            Strategic Operational Blueprint // Science Lead & Content Head Operating System
+          </div>
+          <div style="display: flex; gap: 16px; font-size: 0.85rem;">
+            <a href="https://www.naxxatra.com/" target="_blank" rel="noopener">naxxatra.com</a>
+            <a href="https://youtube.com/@naxxatrasciences" target="_blank" rel="noopener">YouTube: @naxxatrasciences</a>
+            <a href="#hero">Return to Top ↑</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Global Modal for Roles/Details -->
+  <div class="role-modal-overlay" id="role-modal-overlay">
+    <div class="role-modal" id="role-modal-content">
+      <button class="modal-close-btn" id="modal-close-btn">✕</button>
+      <div id="modal-body-inject"></div>
+    </div>
+  </div>
+
+  <!-- Global Quick Navigator / Search Modal -->
+  <div class="search-modal-backdrop" id="search-modal-backdrop">
+    <div class="search-modal">
+      <div class="search-input-wrapper">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-bright)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="global-search-input" class="search-input" placeholder="Search concepts, constants, series, or protocols..." autocomplete="off">
+        <span class="kbd">ESC to close</span>
+      </div>
+      <ul class="search-results-list" id="search-results-list">
+        <!-- Search hits inserted dynamically -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       VANILLA JAVASCRIPT: DATA ARCHITECTURE, INTERACTIONS & SIMULATION
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. AMBIENT SCIENTIFIC CANVAS: PARTICLE SHOWERS & GRID DRIFT
+       ========================================================================== */
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class CosmicParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -100;
+        this.vx = (Math.random() - 0.5) * 1.2;
+        this.vy = Math.random() * 2.5 + 1.2;
+        this.length = Math.random() * 20 + 8;
+        this.alpha = Math.random() * 0.4 + 0.1;
+        this.color = Math.random() > 0.8 ? '#00e5ff' : '#415165';
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.y > height + 100) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.strokeStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.lineWidth = 1;
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.vx * 3, this.y - this.length);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    for (let i = 0; i < 45; i++) {
+      particles.push(new CosmicParticle());
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    // Live Telemetry Time
+    function updateClock() {
+      const now = new Date();
+      const utc = now.toUTCString().split(' ')[4] + ' UTC';
+      const el = document.getElementById('live-time');
+      if (el) el.textContent = utc;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Reading Progress Indicator & Active Navigation Sync
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (window.scrollY / docHeight) * 100;
+      const bar = document.getElementById('progress-bar');
+      if (bar) bar.style.width = scrolled + '%';
+
+      // Active Section Highlighting
+      const sections = document.querySelectorAll('section.os-module, section.hero-container');
+      let currentId = 'hero';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 140;
+        if (window.scrollY >= top) {
+          currentId = sec.getAttribute('id');
+        }
+      });
+      document.querySelectorAll('#main-nav .nav-btn').forEach(btn => {
+        const href = btn.getAttribute('href').replace('#', '');
+        btn.classList.toggle('active', href === currentId);
+      });
+    });
+
+    /* ==========================================================================
+       2. DATA STORAGE: PIPELINE, ROLES, SERIES, CONSTANTS, BRIDGES
+       ========================================================================== */
+    const pipelineData = [
+      {
+        id: "thought",
+        index: "01",
+        name: "THOUGHT",
+        subtitle: "The Unprompted Anomaly",
+        desc: "An initial, unrefined observation or paradox. A sudden realization while watching boiling water, tracking detector noise, or reading an ancient measurement paper.",
+        promptQuestion: "What is strange here? Why does nature behave this way?",
+        deliverable: "Seed note in the Field Journal; 1-paragraph question formulation."
+      },
+      {
+        id: "concept",
+        index: "02",
+        name: "CONCEPT",
+        subtitle: "Theoretical Framing",
+        desc: "Mapping the raw thought to fundamental physics. Identifying the underlying symmetries, conservation laws, invariants, or mathematical descriptions.",
+        promptQuestion: "What established or active physical theory governs this phenomenon?",
+        deliverable: "Conceptual briefing note connecting intuition to formal physics equations."
+      },
+      {
+        id: "experiment",
+        index: "03",
+        name: "EXPERIMENT",
+        subtitle: "Physical or Numerical Test",
+        desc: "Constructing a physical tabletop apparatus, Monte Carlo simulation, or sensor breadboard to measure the phenomenon quantitatively.",
+        promptQuestion: "Can we build, measure, observe, or falsify this with real data?",
+        deliverable: "Tabletop detector build, Python simulation script, or telemetry dataset."
+      },
+      {
+        id: "experience",
+        index: "04",
+        name: "EXPERIENCE",
+        subtitle: "Sensory & Cognitive Immersion",
+        desc: "Translating the dry experimental finding into something that can be felt: interactive sound, 3D visual curvature, physical haptics, or participatory roleplay.",
+        promptQuestion: "What does this allow the human observer to viscerally feel or perceive?",
+        deliverable: "Interactive WebGL visualizer, sonification soundtrack, or VR chamber."
+      },
+      {
+        id: "content",
+        index: "05",
+        name: "CONTENT",
+        subtitle: "Narrative Communication",
+        desc: "A beautifully shot cinematic short, an editorial field essay, or an interactive web article structured with dramatic inquiry rather than boring definitions.",
+        promptQuestion: "Who is the observer? What is the mystery? What is at stake?",
+        deliverable: "10-minute cinematic inquiry video on YouTube / Naxxatra Field Essay."
+      },
+      {
+        id: "project",
+        index: "06",
+        name: "PROJECT",
+        subtitle: "Structured Collective Activity",
+        desc: "Opening the inquiry to students and collaborators. A defined 4-week workshop or technical sprint where learners replicate and expand the experiment.",
+        promptQuestion: "How do participants execute this independently and gather their own results?",
+        deliverable: "Naxxatra Workshop curriculum, hardware BOM list, and lab manual."
+      },
+      {
+        id: "community",
+        index: "07",
+        name: "COMMUNITY",
+        subtitle: "Distributed Collaboration",
+        desc: "Connecting individual projects across schools, universities, and cities into a shared observational network or collaborative data pipeline.",
+        promptQuestion: "Can 100 students collect distributed measurements and merge datasets?",
+        deliverable: "Decentralized sensor network (e.g. Distributed Cosmic Ray Detector network)."
+      },
+      {
+        id: "research",
+        index: "08",
+        name: "RESEARCH",
+        subtitle: "Novel Scientific Contribution",
+        desc: "Aggregating student and community findings, machine learning pipelines, and detector benchmarks into an open scientific paper or instrumentation preprint.",
+        promptQuestion: "Did our collaborative inquiry uncover a genuine empirical or computational insight?",
+        deliverable: "Peer-reviewed preprint, open dataset release, or conference demonstration."
+      }
+    ];
+
+    const rolesData = [
+      {
+        id: "physicist",
+        title: "Physicist",
+        icon: "⚛",
+        focus: "Nuclear, particle, and theoretical physics. Mathematical modeling, conservation laws, symmetry groups, quantum field theory, and spacetime geometry.",
+        bridge: "GROUNDED THEORETICAL RIGOUR",
+        deepDetails: "Ensures every creative idea rests upon real physics—from Bethe-Bloch stopping power in particle detectors to Einstein tensor formulations. Constantly verifies that artistic metaphor never slips into pseudoscience."
+      },
+      {
+        id: "science-communicator",
+        title: "Science Communicator",
+        icon: "🎙",
+        focus: "Translating counter-intuitive, mathematically dense concepts into resonant human clarity without dumbing down the science.",
+        bridge: "EPISTEMIC CLARITY & WONDER",
+        deepDetails: "Replaces Wikipedia-style summaries with narrative questions. Frames science not as a catalog of facts to memorize, but as humanity’s greatest ongoing detective story."
+      },
+      {
+        id: "researcher",
+        title: "Researcher",
+        icon: "🔬",
+        focus: "Formulating falsifiable hypotheses, literature review, data collection, Monte Carlo simulations (GEANT4), and statistical validation.",
+        bridge: "SYSTEMATIC INQUIRY & PUBLICATION",
+        deepDetails: "Connects undergraduate and high school exploration with active frontier research problems. Brings real calorimetry, hadronic shower reconstruction, and particle tracking into Naxxatra."
+      },
+      {
+        id: "storyteller",
+        title: "Storyteller",
+        icon: "📖",
+        focus: "Dramatic tension, observer perspective, historical human struggles, and narrative arcs behind discoveries.",
+        bridge: "THE OBSERVER'S DRAMATIC TENSION",
+        deepDetails: "Every equation was born of a human struggle. Storytelling asks: What observation forced this idea? Who fought against it? What worldview was destroyed by this measurement?"
+      },
+      {
+        id: "educator",
+        title: "Educator",
+        icon: "🎓",
+        focus: "Socratic pedagogical architecture, student agency, scaffolding complex mathematics, and fostering relentless curiosity.",
+        bridge: "INQUIRY-BASED MENTORSHIP",
+        deepDetails: "Replaces 'Lecture-Notes-Exam' with experiential inquiry: Question → Observe → Measure → Model → Create. Students construct understanding from direct evidence."
+      },
+      {
+        id: "filmmaker",
+        title: "Filmmaker",
+        icon: "🎬",
+        focus: "Cinematic pacing, visual metaphor, lens choices, lighting, suspenseful editing, and atmosphere.",
+        bridge: "VISUAL POETRY & CINEMA",
+        deepDetails: "Turns abstract physics into cinematic imagery. Exploring macro photography of condensation in cloud chambers, high-contrast detector readouts, and atmospheric lighting."
+      },
+      {
+        id: "musician",
+        title: "Musician & Sound Designer",
+        icon: "🎵",
+        focus: "Acoustics, harmonic analysis, Fourier series, soundscapes, generative audio, and scientific sonification.",
+        bridge: "DATA SONIFICATION & HARMONICS",
+        deepDetails: "Converts real astrophysical datasets—pulsar periods, cosmic ray showers, gravitational wave chirps—into evocative sonic landscapes that bypass cognitive filters and speak to intuition."
+      },
+      {
+        id: "visual-artist",
+        title: "Visual Artist",
+        icon: "🎨",
+        focus: "Conceptual art, geometric compositions, physical sculptures, generative visuals, and scientific installations.",
+        bridge: "CONCEPTUAL AESTHETICS",
+        deepDetails: "Constructs physical or digital installations where scientific phenomena—magnetic flux lines, interference patterns, particle trajectories—become striking artistic statements."
+      },
+      {
+        id: "web-creator",
+        title: "Web Creator",
+        icon: "🌐",
+        focus: "Interactive 3D graphics (Three.js/WebGL), dynamic computational tools, shaders, and exploratory web applications.",
+        bridge: "INTERACTIVE DIGITAL ARTIFACTS",
+        deepDetails: "Builds living web experiences where visitors manipulate relativistic speeds, rotate 4D manifolds, or configure neural networks in real time."
+      },
+      {
+        id: "experimental-designer",
+        title: "Experimental Designer",
+        icon: "🛠",
+        focus: "Tabletop apparatus fabrication, sensors, microcontrollers (ESP32/Raspberry Pi), optics, and hardware hacking.",
+        bridge: "PHYSICAL DETECTOR FABRICATION",
+        deepDetails: "Designs low-cost, robust scientific instruments that students can fabricate with their own hands—from Peltier-cooled cloud chambers to radio telescope antennas."
+      },
+      {
+        id: "curriculum-designer",
+        title: "Curriculum Designer",
+        icon: "📐",
+        focus: "Modular course sequencing, cross-disciplinary connections, learning objectives, and multi-tier scaling.",
+        bridge: "PROGRESSIVE LEARNING ARCHITECTURE",
+        deepDetails: "Architects scalable educational pathways that allow a single inquiry (e.g. cosmic rays) to be taught to 10-year-olds as wonder and to university seniors as Monte Carlo shower reconstruction."
+      },
+      {
+        id: "community-builder",
+        title: "Community Builder",
+        icon: "👥",
+        focus: "Fostering inclusive student cohorts, open-source science collectives, peer-review circles, and collaborative culture.",
+        bridge: "COLLECTIVE SCIENTIFIC CULTURE",
+        deepDetails: "Creates an environment where any student can say: 'I had a strange scientific idea, and Naxxatra gave me a place to build it.' Cultivates mutual mentorship and lifelong curiosity."
+      }
+    ];
+
+    const mediums19Data = [
+      "Story", "Film", "Soundscape", "Experiment", "Installation",
+      "Interactive Website", "Game", "Simulation", "Workshop", "Conversation",
+      "Physical Object", "Visual Metaphor", "Piece of Music", "Performance",
+      "Scientific Investigation", "Community Project", "Research Paper",
+      "Living Curriculum", "Public Event"
+    ];
+
+    const spectrumData = {
+      science: {
+        title: "Science",
+        question: "What fundamental physical concept can we explore?",
+        examples: "Quantum mechanics, general relativity, nuclear physics, particle interactions, thermodynamics, dynamical systems, electromagnetism, information theory, measurement, statistics.",
+        naxxatraRole: "Anchors the inquiry in rigorous theoretical and mathematical foundations. Identifies the unresolved questions and active literature."
+      },
+      experiment: {
+        title: "Experiment",
+        question: "Can the idea become something people can actually do?",
+        examples: "Build tabletop instruments, measure physical constants, observe cosmic particles, collect telemetry, simulate in Python, classify shower topologies, falsify hypotheses.",
+        naxxatraRole: "Moves students from passive consumers of knowledge to empirical investigators with laboratory agency."
+      },
+      story: {
+        title: "Story",
+        question: "Can the science become a narrative?",
+        examples: "Who is observing? What is unknown? What is at stake? What changes in the observer's worldview? What crisis was caused by an anomalous experimental result?",
+        naxxatraRole: "Restores the dramatic, human history of discovery. Highlights rivalries, paradoxes, and the shock of unexpected data."
+      },
+      visual: {
+        title: "Visual",
+        question: "Can the concept become an image, simulation, film, or 3D world?",
+        examples: "Blender volumetric particle simulations, raymarching curved spacetime around a rotating Kerr black hole, GLSL shader fields, visual phase portraits.",
+        naxxatraRole: "Replaces decorative stock graphics with mathematically accurate, visually arresting simulations."
+      },
+      sound: {
+        title: "Sound",
+        question: "Can scientific ideas become music, rhythm, or generative audio?",
+        examples: "Sonification of pulsar timing arrays, sonified muon coincidences, gravitational wave chirp synth modules, acoustic resonance of stellar interiors.",
+        naxxatraRole: "Engages the auditory cortex to detect subtle patterns and periodicities that visual plots often obscure."
+      },
+      human: {
+        title: "Human Experience",
+        question: "What does this tell us about perception, time, uncertainty, and reality?",
+        examples: "The philosophical shock of quantum wave function collapse, the relativity of simultaneity, the thermodynamic arrow of time, human sensory limits.",
+        naxxatraRole: "Connects subatomic or astronomical physics directly to the existential human condition and philosophy of science."
+      },
+      community: {
+        title: "Community",
+        question: "Can people participate rather than simply watch?",
+        examples: "Distributed muon tracking network across cities, collaborative astronomical image stacking, student citizen-science galaxy classifications.",
+        naxxatraRole: "Transforms solitary learners into a collaborative research collective sharing data and code."
+      },
+      research: {
+        title: "Research",
+        question: "Can the idea evolve into a serious scientific contribution?",
+        examples: "Machine learning classifier for calorimeter showers, novel low-cost detector prototype, published educational study, open-source physics software.",
+        naxxatraRole: "Validates Naxxatra's mission: transforming student curiosity into genuine research output."
+      }
+    };
+
+    const cascadeData = [
+      { num: "01", title: "Scientific Question", desc: "What happens to information across the event horizon?" },
+      { num: "02", title: "Experiment / Simulation", desc: "Numerical solver comparing Schwarzschild vs Gullstrand-Painlevé coordinates." },
+      { num: "03", title: "Workshop", desc: "Dual-observer collaborative Python laboratory: Infall vs Distant observer." },
+      { num: "04", title: "Cinematic Video", desc: "Narrative film 'The Last Signal' dramatizing the infinite time-dilation divergence." },
+      { num: "05", title: "Field Article", desc: "Deep analytical essay: 'Why You Never See Anything Cross the Horizon'." },
+      { num: "06", title: "Open Dataset", desc: "Geodesic trajectories & redshift factor data published on GitHub." },
+      { num: "07", title: "Interactive Viz", desc: "Three.js interactive web app showing light cones tipping into the singularity." },
+      { num: "08", title: "Student Project", desc: "Undergraduate project extending code to charged Reissner-Nordström metrics." },
+      { num: "09", title: "Community Salon", desc: "Discussion: Complementarity, firewalls, and the quantum measurement problem." },
+      { num: "10", title: "Research Paper", desc: "Preprint on pedagogical visualization of coordinate vs proper time." }
+    ];
+
+    const seriesData = [
+      {
+        num: "IP // 01",
+        name: "NAXXATRA FIELD NOTES",
+        premise: "Short, rigorous scientific investigations into counter-intuitive phenomena observed in the laboratory or in nature.",
+        format: "8–12 min Cinematic Video + Field Code Notebook",
+        pilot: "Investigating the thermal noise limits of consumer photodiodes as quantum random number generators."
+      },
+      {
+        num: "IP // 02",
+        name: "THE UNIVERSE UNDER TEST",
+        premise: "Direct empirical trials of fundamental laws. Building tabletop experiments to test whether textbook physics holds up to precision scrutiny.",
+        format: "Experimental Docuseries + Open Hardware BOM",
+        pilot: "Measuring the speed of light in olive oil using a chocolate bar, microwave cavity, and modulated laser."
+      },
+      {
+        num: "IP // 03",
+        name: "WHY THIS NUMBER?",
+        premise: "The forensic human stories, experimental battles, and philosophical crises behind fundamental constants like c, h, G, and α.",
+        format: "Narrative History Essay + Interactive Simulator",
+        pilot: "The Mystery of 1/137: Why Sommerfeld’s Fine Structure Constant haunts quantum electrodynamics."
+      },
+      {
+        num: "IP // 04",
+        name: "THE MEASUREMENT PROJECT",
+        premise: "Tracing how humanity learned to measure reality—from the swing of Galileo’s pendulum to the 2019 SI redefinition fixing Planck's constant.",
+        format: "Hands-on Instrument Build + Exhibition",
+        pilot: "Rebuilding the Cavendish Torsion Balance with precision laser optical levers to weigh the Earth."
+      },
+      {
+        num: "IP // 05",
+        name: "STRANGE QUESTIONS",
+        premise: "Inquiries that sound like stoner philosophy but possess deep, rigorous, and surprising mathematical and physical answers.",
+        format: "Socratic Video Dialogue + Interactive Visual",
+        pilot: "If a mirror reflects photons perfectly, does shining a light on it accelerate a spacecraft?"
+      },
+      {
+        num: "IP // 06",
+        name: "PHYSICS OF ORDINARY THINGS",
+        premise: "Uncovering advanced quantum mechanics, fluid turbulence, and relativistic effects hiding inside mundane household objects.",
+        format: "Macro-Cinematography + Computational Lab",
+        pilot: "The Quantum Tunneling Inside Your Kitchen Gas Stove Spark Igniter."
+      },
+      {
+        num: "IP // 07",
+        name: "BUILD THE UNIVERSE",
+        premise: "Hands-on engineering of scientific apparatus from scratch. Bridging soldering irons, 3D printing, optics, and code.",
+        format: "Step-by-step Maker Guide + Community Challenge",
+        pilot: "Constructing a 1.420 GHz Horn Antenna to measure the Hydrogen 21cm Line of the Milky Way."
+      },
+      {
+        num: "IP // 08",
+        name: "FROM IDEA TO INSTRUMENT",
+        premise: "The deep history of how abstract theoretical problems forced the invention of revolutionary engineering instruments.",
+        format: "Historical Narrative + Architectural Teardown",
+        pilot: "How the search for the luminiferous ether forced Michelson to invent interferometry."
+      },
+      {
+        num: "IP // 09",
+        name: "SCIENCE AFTER DARK",
+        premise: "Unfiltered, philosophical, late-night conversations exploring the epistemic edges: consciousness, quantum interpretations, and cosmology.",
+        format: "Long-form Podcast / Salon + Ambient Audio",
+        pilot: "Is the Wavefunction Real, or Just an Archive of Human Ignorance?"
+      }
+    ];
+
+    const inquirySteps = [
+      { step: "01", name: "QUESTION", desc: "An authentic, unresolved mystery arising from an observed anomaly." },
+      { step: "02", name: "CURIOSITY", desc: "Emotional and intellectual drive to probe why nature exhibits this behavior." },
+      { step: "03", name: "OBSERVATION", desc: "Careful, patient sensory and instrument logging without jumping to conclusions." },
+      { step: "04", name: "EXPERIMENT", desc: "Manipulating independent variables to observe systematic physical responses." },
+      { step: "05", name: "MATHEMATICS", desc: "Translating empirical relationships into rigorous symbolic equations." },
+      { step: "06", name: "MODEL", desc: "Constructing a predictive conceptual framework that can forecast new tests." },
+      { step: "07", name: "DATA", desc: "Acquiring quantitative telemetry, error bars, and statistical distributions." },
+      { step: "08", name: "INTERPRETATION", desc: "Critically comparing measured reality against theoretical predictions." },
+      { step: "09", name: "DISCUSSION", desc: "Peer-review, challenging assumptions, and debating rival explanations." },
+      { step: "10", name: "CREATION", desc: "Synthesizing the discovery into a new instrument, film, paper, or code repo." }
+    ];
+
+    const ageLevels = [
+      {
+        lvl: "LEVEL 01",
+        target: "Children (6–10)",
+        focus: "Wonder & Physical Interaction",
+        approach: "Direct tactile immersion. Watching vapor clouds swirl in chilled alcohol, feeling magnets push and pull through copper pipes, observing colored spectra through handheld diffraction grating glasses.",
+        sample: "Cosmic Ray Wonder: 'Watching invisible space bullets create cloud trails in a cold glass box!'"
+      },
+      {
+        lvl: "LEVEL 02",
+        target: "School Students (11–14)",
+        focus: "Conceptual Mechanics & Experiments",
+        approach: "Simple variables, hypotheses, and physical measurements. Calculating speeds, graphing temperatures, understanding electric charge and light reflection.",
+        sample: "Cosmic Ray Detective: 'Counting how many tracks cross our cloud chamber per minute and checking if shielding with books slows them down.'"
+      },
+      {
+        lvl: "LEVEL 03",
+        target: "High School (15–18)",
+        focus: "Mathematics & Instrumentation",
+        approach: "Algebraic physics, vectors, sensor fabrication, Arduino/Raspberry Pi logging, and introductory calculus.",
+        sample: "Muon Lifetime Lab: 'Using dual plastic scintillator paddles and coincidence logic to measure the relativistic time dilation of cosmic muons.'"
+      },
+      {
+        lvl: "LEVEL 04",
+        target: "Undergraduates (18–22)",
+        focus: "Computation, Data & Formal Theory",
+        approach: "Differential equations, Python/NumPy, statistical error analysis, Fourier transforms, and quantum mechanics fundamentals.",
+        sample: "GEANT4 & ML Shower Simulation: 'Reconstructing hadronic showers and identifying neutral pions using machine learning classifiers.'"
+      },
+      {
+        lvl: "LEVEL 05",
+        target: "Advanced Researchers",
+        focus: "Frontier Problems & Open Literature",
+        approach: "Specialized Monte Carlo simulations, high-energy detector design (ZDC for EIC), QCD phenomenological modeling, and publishable datasets.",
+        sample: "Zero Degree Calorimeter Analysis: 'Machine learning techniques for neutron-induced hadronic shower reconstruction at the Electron-Ion Collider.'"
+      },
+      {
+        lvl: "LEVEL 06",
+        target: "General Public",
+        focus: "Story, Visual Culture & Human Meaning",
+        approach: "Cinematic documentaries, interactive web experiences, philosophical dialogue, and open cultural exhibitions.",
+        sample: "The Invisible Rain: 'A multi-channel audiovisual installation translating live cosmic ray hits into spatial piano notes and light bursts.'"
+      }
+    ];
+
+    const physicsBridges = [
+      { id: "cosmic-rays", name: "Cosmic Rays", astro: "Supernova remnants, blazars, active galactic nuclei (AGN) acceleration.", expt: "Scintillator paddles, cloud chambers, silicon photomultipliers." },
+      { id: "particle-detection", name: "Particle Detection", astro: "Gamma-ray astronomy, Fermi-LAT satellite, Cherenkov telescopes.", expt: "Gas ionization chambers, semiconductor drift detectors." },
+      { id: "radiation", name: "Radiation & Decay", astro: "Radioactive heating of planetary cores, isotopic abundance in meteorites.", expt: "Geiger-Müller counters, gamma spectroscopy with NaI(Tl)." },
+      { id: "detectors", name: "Detector Physics", astro: "CCD/CMOS sensors in space observatories (JWST, Hubble).", expt: "Noise figure analysis, quantum efficiency, readout electronics." },
+      { id: "scintillation", name: "Scintillation", astro: "X-ray and gamma-ray burst detection in orbit.", expt: "Plastic scintillators, optical waveguides, SiPM readout." },
+      { id: "cloud-chambers", name: "Cloud Chambers", astro: "Direct visualization of natural terrestrial cosmic background.", expt: "Ethanol vapor super-saturation, Peltier thermoelectric cooling." },
+      { id: "calorimetry", name: "Calorimetry", astro: "Total energy measurement of ultra-high-energy cosmic rays.", expt: "Sampling calorimeters with tungsten/scintillating fiber layers." },
+      { id: "hadronic-showers", name: "Hadronic Showers", astro: "Extensive air showers (EAS) in Earth's atmosphere from cosmic protons.", expt: "EIC Zero Degree Calorimeter (ZDC) neutron shower reconstruction." },
+      { id: "antimatter", name: "Antimatter", astro: "Positron fraction in cosmic rays (AMS-02), baryon asymmetry of universe.", expt: "Cloud chamber magnetic track bending (Anderson discovery)." },
+      { id: "neutrinos", name: "Neutrinos", astro: "Solar fusion interior probe, Supernova 1987A, IceCube neutrino astronomy.", expt: "Large water Cherenkov detectors, photomultiplier tubes." },
+      { id: "nuclear-astro", name: "Nuclear Astrophysics", astro: "CNO cycle, pp-chain in main-sequence stars, Chandrasekhar mass limit.", expt: "Low-energy accelerator cross-section measurements." },
+      { id: "nucleosynthesis", name: "Stellar Nucleosynthesis", astro: "s-process in AGB stars, r-process in neutron star mergers (kilonovae).", expt: "Mass spectrometry of pre-solar grains, neutron capture rates." },
+      { id: "radioactive-decay", name: "Radioactive Decay", astro: "Cosmic chronometers: Uranium-Thorium dating of ancient halo stars.", expt: "Exponential decay curve fitting, Poisson counting statistics." },
+      { id: "symmetry", name: "Symmetry & Noether", astro: "Conservation of energy in expanding Friedmann spacetime.", expt: "Parity violation experiments (Wu experiment), CPT invariance." },
+      { id: "conservation-laws", name: "Conservation Laws", astro: "Angular momentum conservation in protostellar accretion disks.", expt: "Linear momentum collision tracking in particle physics." },
+      { id: "fundamental-particles", name: "Fundamental Particles", astro: "Early universe quark-gluon plasma (QGP) at t < 10 microseconds.", expt: "Relativistic Heavy Ion Collider (RHIC) & LHC ALICE experiment." },
+      { id: "accelerators", name: "Accelerator Physics", astro: "Natural cosmic accelerators: pulsar wind nebulae, shock fronts.", expt: "RF cavities, beam optics, quadrupole focusing magnets." },
+      { id: "high-energy-astro", name: "High-Energy Astrophysics", astro: "Microquasars, relativistic jets, tidal disruption events.", expt: "Multi-wavelength correlation with X-ray/TeV photon triggers." },
+      { id: "cosmic-ray-astro", name: "Cosmic-Ray Astronomy", astro: "Magnetic deflection of charged particles in Galactic magnetic fields.", expt: "Pierre Auger surface detector water tanks and fluorescence eyes." },
+      { id: "electronics", name: "Detector Electronics", astro: "Sub-nanosecond coincidence timing for astronomical interferometry.", expt: "Constant fraction discriminators, FPGA time-to-digital converters." },
+      { id: "monte-carlo", name: "Monte Carlo Simulation", astro: "Simulating photon transport through planetary nebulae.", expt: "GEANT4 toolkit for simulating particle passage through matter." },
+      { id: "ml-in-physics", name: "Machine Learning in Physics", astro: "Gravitational lens detection in Euclid/Rubin surveys.", expt: "CNN and GNN algorithms for calorimeter energy regression & clustering." }
+    ];
+
+    const historyQuestions = [
+      { num: "INQUIRY 01", q: "Why was the concept proposed?", hint: "What physical anomaly forced theorists to break with previous orthodoxies?" },
+      { num: "INQUIRY 02", q: "What problem existed before it?", hint: "Understand the crisis: ultraviolet catastrophe, ether drift, planetary orbits." },
+      { num: "INQUIRY 03", q: "What observation forced a new idea?", hint: "The stubborn experimental outlier that refused to fit the established model." },
+      { num: "INQUIRY 04", q: "Who disagreed, and why?", hint: "Science is contentious. Explore Einstein vs Bohr, Newton vs Huygens, Eddington vs Chandrasekhar." },
+      { num: "INQUIRY 05", q: "What experiment changed the situation?", hint: "The definitive empirical turning point that broke the intellectual deadlock." },
+      { num: "INQUIRY 06", q: "How did scientists actually measure it?", hint: "The precision instrumentation, levers, mirrors, and tolerances required." },
+      { num: "INQUIRY 07", q: "Why was one definition chosen over another?", hint: "The debates inside international committees and standardization bodies." },
+      { num: "INQUIRY 08", q: "What alternative paths were discarded?", hint: "The competing hypotheses that were viable before critical tests eliminated them." },
+      { num: "INQUIRY 09", q: "How did technology influence theory?", hint: "How steam engines created thermodynamics, vacuum pumps revealed atoms." },
+      { num: "INQUIRY 10", q: "How did theory influence technology?", hint: "How general relativity enabled GPS, and quantum tunneling built transistors." }
+    ];
+
+    const constantsData = [
+      { sym: "c", name: "Speed of Light", val: "299,792,458 m/s", problem: "Ole Rømer's Jupiter moon timing; Michelson-Morley null ether result.", instr: "Rotating mirror apparatus, laser interferometers.", exp: "Measure c in liquids using modulated lasers and phase detectors." },
+      { sym: "h", name: "Planck Constant", val: "6.62607015×10⁻³⁴ J·s", problem: "Blackbody radiation spectrum and the ultraviolet catastrophe.", instr: "Kibble (Watt) balance, photo-electric effect stop-potentials.", exp: "Determine h using multi-wavelength LEDs and a voltmeter." },
+      { sym: "ħ", name: "Reduced Planck", val: "1.054571817×10⁻³⁴ J·s", problem: "Orbital angular momentum quantization in Bohr's atomic model.", instr: "Stern-Gerlach apparatus, quantum Hall resistance standards.", exp: "Investigate Heisenberg uncertainty via single-slit laser diffraction." },
+      { sym: "G", name: "Gravitational Constant", val: "6.67430×10⁻¹¹ m³·kg⁻¹·s⁻²", problem: "The least precisely measured fundamental constant in physics.", instr: "Cavendish torsion balance, atom interferometry.", exp: "Laser-readout torsion pendulum measuring 10kg lead sphere attraction." },
+      { sym: "kB", name: "Boltzmann Constant", val: "1.380649×10⁻²³ J/K", problem: "Bridging micro-states of particles with macroscopic temperature.", instr: "Acoustic gas thermometry, Johnson noise thermometry.", exp: "Measure thermal Johnson noise in high-precision resistors." },
+      { sym: "e", name: "Elementary Charge", val: "1.602176634×10⁻¹⁹ C", problem: "Quantization of electricity vs continuous fluid models.", instr: "Millikan oil drop experiment, Josephson effect.", exp: "Build a modern video-microscope Millikan oil drop tracking app." },
+      { sym: "α", name: "Fine Structure Constant", val: "1 / 137.035999206", problem: "Dimensionless coupling constant of quantum electrodynamics.", instr: "Electron g-2 anomaly in Penning traps, recoil velocity of atoms.", exp: "Investigate hydrogen Balmer series fine-structure splitting." },
+      { sym: "NA", name: "Avogadro Constant", val: "6.02214076×10²³ mol⁻¹", problem: "Counting individual atoms to bridge atomic mass units to grams.", instr: "Avogadro Project ultra-pure silicon-28 crystal spheres.", exp: "Electrolysis of copper sulfate to count atoms via Faradaic current." },
+      { sym: "μ₀", name: "Vacuum Permeability", val: "1.25663706212×10⁻⁶ N/A²", problem: "Magnetic force between parallel currents in free space.", instr: "Helmholtz coils, SQUID magnetometers.", exp: "Measure magnetic fields inside solenoids with Hall-effect sensors." },
+      { sym: "ε₀", name: "Vacuum Permittivity", val: "8.8541878128×10⁻¹² F/m", problem: "Electric displacement and electrostatic field energy storage.", instr: "Precision parallel-plate guard-ring capacitors.", exp: "Measure capacitance shift between vacuum, air, and dielectric slabs." }
+    ];
+
+    const unitsData = [
+      { sym: "m", name: "Metre (Length)", val: "Defined via c", problem: "Evolved from Earth's meridian to platinum bar, now distance light travels in 1/299792458 s.", instr: "Laser wavelength interferometry (He-Ne laser combs).", exp: "Build a Michelson interferometer to count light fringes." },
+      { sym: "s", name: "Second (Time)", val: "Defined via ΔνCs", problem: "Evolved from Earth rotation (solar day) to 9,192,631,770 periods of Cesium-133 hyperfine radiation.", instr: "Atomic fountain clocks, optical lattice strontium clocks.", exp: "Construct an optical clock simulation using audio frequency beating." },
+      { sym: "kg", name: "Kilogram (Mass)", val: "Defined via h", problem: "The 2019 revolution: replacing the artifact 'Le Grand K' in Paris with the Kibble balance fixing Planck's constant.", instr: "Kibble Balance (Watt balance), Silicon sphere X-ray diffraction.", exp: "Build a LEGO-and-voice-coil tabletop Kibble balance." },
+      { sym: "A", name: "Ampere (Current)", val: "Defined via e", problem: "Shifting from unmeasurable force between infinite wires to exactly 1/(1.602176634×10⁻¹⁹) charges per second.", instr: "Single-electron tunneling (SET) pumps, Josephson-von Klitzing standards.", exp: "Calibrate microampere currents using capacitor charge accumulation." },
+      { sym: "K", name: "Kelvin (Temp)", val: "Defined via kB", problem: "Replacing the triple point of water with fixing the Boltzmann constant.", instr: "Acoustic gas thermometer, primary Johnson noise standards.", exp: "Measure the speed of sound in nitrogen as a function of temperature." },
+      { sym: "mol", name: "Mole (Amount)", val: "Defined via NA", problem: "Now contains exactly 6.02214076×10²³ elementary entities.", instr: "X-ray crystal density method on enriched Silicon-28.", exp: "Electroplating experiments calculating Avogadro's number." },
+      { sym: "cd", name: "Candela (Luminosity)", val: "Defined via Kcd", problem: "The only base unit tied to human physiology (photopic eye sensitivity curve).", instr: "Standard photometers calibrated to 540×10¹² Hz radiation.", exp: "Map human eye spectral response using calibrated monochromatic LEDs." }
+    ];
+
+    const mediumsMatrix = [
+      { duo: "SCIENCE + MUSIC", title: "Sonification of the Universe", desc: "Converting pulsar rotational frequencies, cosmic ray shower particle cascades, and gravitational waves into acoustic and musical structures. Sound communicates subtle timing anomalies and harmonics faster than the eye can read graphs." },
+      { duo: "SCIENCE + BLENDER", title: "Scientifically Accurate 3D Simulation", desc: "Creating physically-based volumetric simulations: relativistic light deflection around black holes, particle showers in sampling calorimeters, and magnetic reconnection in solar flares." },
+      { duo: "SCIENCE + FILM", title: "Cinematic Observer Narratives", desc: "Crafting scientific cinema where the camera represents an observer bound by physical laws—experiencing time dilation, redshift, sensory deprivation, and cosmic scale." },
+      { duo: "SCIENCE + WEB", title: "Interactive GLSL & WebGL Lab", desc: "Interactive browser sandboxes that let anyone rotate 4-dimensional hypercubes, manipulate relativistic velocity sliders, or simulate wavepacket interference in real-time." },
+      { duo: "SCIENCE + ART", title: "Conceptual Scientific Installations", desc: "Transforming physical laboratories into public art: a cloud chamber sculpture revealing cosmic muons as vapor trails, or a pendulum room exploring Foucault precessions." },
+      { duo: "SCIENCE + PHILOSOPHY", title: "Epistemological Paradoxes", desc: "Probing the foundational limits of human knowledge: what does the act of measurement actually alter? What is the ontological status of the quantum wavefunction?" },
+      { duo: "SCIENCE + COMMUNITY", title: "Participatory Distributed Science", desc: "Orchestrating networks of high schoolers and university students to build DIY sensors, share synchronized time-stamped datasets, and run distributed cosmic ray searches." }
+    ];
+
+    const specPresets = {
+      "last-signal": {
+        title: "THE LAST SIGNAL: Dual Observer Black Hole Infall",
+        question: "What does an observer actually observe while falling into a black hole compared to an observer waiting outside?",
+        foundation: "General Relativity, Schwarzschild and Gullstrand-Painlevé coordinates, gravitational time dilation, infinite redshift.",
+        experience: "Students split into dual pairs: Infalling Observer vs Distant Observer. They run synchronized Python simulations recording received photon signals.",
+        medium: "Narrative Short Film + Interactive WebGL Simulation + Python Laboratory",
+        audience: "High School, Undergraduates, General Curious Public (Scalable)",
+        duration: "3-Week Cohort / 15-Minute Cinematic Output",
+        resources: "Python (NumPy/Matplotlib), Three.js renderer, video camera, sound sonification synth.",
+        team: "Science Lead (Physics/Math), Video Editor, Web Developer, Student Testers.",
+        outputs: "Interactive simulation website, short narrative film, open-source Jupyter tutorial notebook.",
+        naxxatraValue: "Establishes Naxxatra as a place where relativity is experienced through multiple observer perspectives rather than recited from memory.",
+        extension: "Expand simulation to rotating Kerr black holes with frame-dragging ergospheres.",
+        researchPotential: "Investigate numerical education metrics on overcoming relativistic misconceptions.",
+        rigour: "Established Science (General Relativity)"
+      },
+      "muon-cloud": {
+        title: "MUON-NET: Distributed Cloud Chamber & Machine Learning Cosmic Shower Tracker",
+        question: "Can distributed student-built detectors map the spatial and temporal arrival of atmospheric cosmic ray showers?",
+        foundation: "Nuclear and particle physics, Bethe-Bloch stopping power, extensive air showers, computer vision.",
+        experience: "Students construct Peltier-cooled diffusion cloud chambers, attach cameras, and write OpenCV/PyTorch scripts to classify particle tracks automatically.",
+        medium: "Hardware Detector + Machine Learning Pipeline + Distributed Web Map",
+        audience: "Undergraduates & High School Physics Clubs",
+        duration: "6-Week Hands-On Sprint",
+        resources: "Peltier thermoelectric coolers, isopropanol, webcam, Raspberry Pi, PyTorch.",
+        team: "Instrumentation Lead, Nuclear Physics Lead (ML Shower Specialist), Student Hardware Teams.",
+        outputs: "Open-source cloud chamber CAD files, open dataset of labeled particle tracks, live web dashboard.",
+        naxxatraValue: "Directly bridges my specialization in hadronic showers and machine learning with student-built hardware.",
+        extension: "Deploy across 20 schools to build a nationwide cosmic ray coincidence array.",
+        researchPotential: "High: Coincidence timing of ultra-high-energy cosmic ray (UHECR) showers.",
+        rigour: "Active Research & Established Detector Physics"
+      },
+      "kibble-balance": {
+        title: "THE KIBBLE DIALOGUE: Weighing the Photon with a DIY Watt Balance",
+        question: "How can measuring electromagnetic voltage and velocity define the kilogram using Planck's constant?",
+        foundation: "Electromagnetism, Lorentz force, Faraday induction, quantum Hall effect, Planck's constant.",
+        experience: "Participants build a voice-coil audio balance that switches between 'weighing mode' and 'velocity mode', calculating mass from electrical standards.",
+        medium: "Physical Tabletop Instrument + Historical Video Essay + Classroom Lab",
+        audience: "Undergraduates, Engineering Students",
+        duration: "2-Week Build & Calibration Workshop",
+        resources: "Loudspeaker voice coil, laser optical lever, precision ADC, reference resistors, calibration masses.",
+        team: "Hardware Engineer, Science Lead (Metrology Specialist), Educator.",
+        outputs: "Functional DIY Watt balance capable of 1% mass precision, educational documentation.",
+        naxxatraValue: "Brings the 2019 SI metrology revolution to life; students experience how fundamental constants define reality.",
+        extension: "Refine precision to 0.1% using interferometer positioning and vacuum enclosure.",
+        researchPotential: "Low-cost metrology pedagogy paper.",
+        rigour: "Established Metrology & Quantum Standards"
+      }
+    };
+
+    const graveyardData = [
+      { title: "Tabletop Relativistic Plasma Wakefield Accelerator", cat: "needs equipment", reason: "Requires high-intensity terawatt femtosecond laser system currently out of reach for a mobile lab." },
+      { title: "Orbital Balloon Neutrino Radio Detection Array", cat: "needs funding", reason: "High-altitude sounding balloon launch permits, Antarctic or desert RF-quiet recovery logistics." },
+      { title: "Quantum Entanglement Bell Test Demonstration Kit (<$100)", cat: "technical development", reason: "Current BBO non-linear crystal down-conversion and single-photon avalanche photodiode (SPAD) costs remain >$1,500." },
+      { title: "Acoustic Metric Acoustic Black Hole Analog", cat: "experimental", reason: "Laval nozzle supersonic fluid flow setup exhibits extreme boundary layer turbulence interfering with Hawking phononic radiation." },
+      { title: "Global Muon Radiography of Ancient Geological Formations", cat: "needs collaborator", reason: "Requires extensive archaeological permissions, multi-square-meter muon scintillators, and multi-year exposure times." },
+      { title: "Direct Detection of Dark Matter Axions via Resonant Cavity", cat: "high-risk/high-reward", reason: "Cryogenic dilution refrigerator (<100 mK) and 8 Tesla superconducting magnet required for Haloscope cavity." }
+    ];
+
+    const mindsetSeven = [
+      { num: "01", q: "What is the scientific question?", r: "Isolate the precise physical law, mechanism, or anomaly at stake." },
+      { num: "02", q: "What is the human question?", r: "Identify how this touches perception, intuition, scale, time, or existential mystery." },
+      { num: "03", q: "What is the creative possibility?", r: "Determine whether this should be a film, sonification, 3D shader, or physical sculpture." },
+      { num: "04", q: "What can we actually build?", r: "Define the smallest, most concrete prototype we can construct in 1–7 days." },
+      { num: "05", q: "Who can participate?", r: "Map the entry point for children, students, researchers, and the wider public." },
+      { num: "06", q: "What can we learn?", r: "Clarify what new empirical, educational, or computational insight will emerge." },
+      { num: "07", q: "What can this become next?", r: "Chart the second-order domino effect into workshops, publications, or Naxxatra IP." }
+    ];
+
+    const secondOrderDominoes = [
+      "Cloud Chamber Build",
+      "Observe Particle Tracks",
+      "Identify Particle Signatures (α, β, μ)",
+      "Photograph & Video Tracks",
+      "Curate Open Dataset",
+      "Train ML Track Classifier",
+      "Correlate Cosmic Ray Flux",
+      "Public Interactive Exhibition",
+      "High School Curriculum Module",
+      "Cinematic Documentary",
+      "Peer-Reviewed Collaboration"
+    ];
+
+    /* ==========================================================================
+       3. DOM INJECTION & INTERACTIVE EVENT CONTROLLERS
+       ========================================================================== */
+
+    // 1. Pipeline Stepper Render
+    function renderPipeline() {
+      const stepper = document.getElementById('pipeline-stepper');
+      if (!stepper) return;
+      stepper.innerHTML = pipelineData.map((s, idx) => `
+        <div class="pipeline-step-node ${idx === 0 ? 'active' : ''}" data-id="${s.id}">
+          <span class="step-idx">${s.index} // PHASE</span>
+          <span class="step-name">${s.name}</span>
+        </div>
+        ${idx < pipelineData.length - 1 ? '<div class="pipeline-arrow">→</div>' : ''}
+      `).join('');
+
+      document.querySelectorAll('.pipeline-step-node').forEach(node => {
+        node.addEventListener('click', () => {
+          document.querySelectorAll('.pipeline-step-node').forEach(n => n.classList.remove('active'));
+          node.classList.add('active');
+          const id = node.getAttribute('data-id');
+          updatePipelineDetail(id);
+        });
+      });
+
+      updatePipelineDetail(pipelineData[0].id);
+    }
+
+    function updatePipelineDetail(id) {
+      const data = pipelineData.find(p => p.id === id);
+      const detail = document.getElementById('pipeline-detail-view');
+      if (!data || !detail) return;
+      detail.innerHTML = `
+        <div>
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <span class="pill-tag">${data.index} // ${data.name}</span>
+            <span class="mono" style="font-size: 0.8rem; color: var(--text-muted);">${data.subtitle}</span>
+          </div>
+          <p style="font-size: 0.95rem; color: #fff; margin-bottom: 12px;">${data.desc}</p>
+          <div style="background: rgba(0, 229, 255, 0.04); border-left: 3px solid var(--cyan-bright); padding: 10px 14px; margin-top: 10px;">
+            <span class="mono" style="font-size: 0.72rem; color: var(--cyan-bright);">THE INQUIRY TRIGGER:</span>
+            <p style="font-size: 0.88rem; color: var(--text-primary); margin-top: 2px;"><em>"${data.promptQuestion}"</em></p>
+          </div>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px;">
+          <span class="mono" style="font-size: 0.7rem; color: var(--cyan-bright); text-transform: uppercase;">Tangible Naxxatra Output</span>
+          <p style="font-size: 0.85rem; color: #fff; margin-top: 6px; font-weight: 500;">${data.deliverable}</p>
+        </div>
+      `;
+    }
+
+    // 2. Roles Grid Render
+    function renderRoles() {
+      const grid = document.getElementById('roles-grid');
+      if (!grid) return;
+      grid.innerHTML = rolesData.map(r => `
+        <div class="role-card" data-role-id="${r.id}">
+          <div class="role-card-top">
+            <div class="role-icon">${r.icon}</div>
+            <span class="pill-tag" style="font-size: 0.65rem;">FACET</span>
+          </div>
+          <div class="role-title">${r.title}</div>
+          <div class="role-focus">${r.focus}</div>
+          <div class="role-bridge"><span>→</span> <span>${r.bridge}</span></div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.role-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = card.getAttribute('data-role-id');
+          openRoleModal(id);
+        });
+      });
+    }
+
+    function openRoleModal(id) {
+      const role = rolesData.find(r => r.id === id);
+      const overlay = document.getElementById('role-modal-overlay');
+      const body = document.getElementById('modal-body-inject');
+      if (!role || !overlay || !body) return;
+
+      body.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
+          <div class="role-icon" style="width: 44px; height: 44px; font-size: 1.4rem;">${role.icon}</div>
+          <div>
+            <span class="pill-tag">${role.bridge}</span>
+            <h2 style="font-size: 1.5rem; margin-top: 4px;">${role.title}</h2>
+          </div>
+        </div>
+        <p style="font-size: 1rem; color: #fff; margin-bottom: 14px;">${role.focus}</p>
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+          <h4 style="font-size: 0.85rem; color: var(--cyan-bright); margin-bottom: 6px; font-family: var(--font-mono);">NAXXATRA OPERATIONAL INTEGRATION:</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary);">${role.deepDetails}</p>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+          STATUS: ACTIVE SCIENTIFIC-CREATIVE LEVER
+        </div>
+      `;
+      overlay.classList.add('open');
+    }
+
+    // Modal Close logic
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const roleModalOverlay = document.getElementById('role-modal-overlay');
+    if (modalCloseBtn && roleModalOverlay) {
+      modalCloseBtn.addEventListener('click', () => roleModalOverlay.classList.remove('open'));
+      roleModalOverlay.addEventListener('click', (e) => {
+        if (e.target === roleModalOverlay) roleModalOverlay.classList.remove('open');
+      });
+    }
+
+    // 3. Mediums Spectrum Grid (19 Mediums)
+    function renderMediums19() {
+      const grid = document.getElementById('mediums-spectrum-grid');
+      if (!grid) return;
+      grid.innerHTML = mediums19Data.map(m => `
+        <div class="medium-card">
+          <span class="dot"></span>
+          <span>${m}</span>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.medium-card').forEach(card => {
+        card.addEventListener('click', () => {
+          card.classList.toggle('active');
+        });
+      });
+    }
+
+    // 4. Creative Spectrum (8 Tabs)
+    function renderSpectrumTabs() {
+      const bar = document.getElementById('spectrum-tab-bar');
+      if (!bar) return;
+      const keys = Object.keys(spectrumData);
+      bar.innerHTML = keys.map((k, idx) => `
+        <button class="spectrum-tab-btn ${idx === 0 ? 'active' : ''}" data-key="${k}">
+          <span class="mono">${(idx + 1).toString().padStart(2, '0')}.</span>
+          <span>${spectrumData[k].title}</span>
+        </button>
+      `).join('');
+
+      document.querySelectorAll('.spectrum-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.spectrum-tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const key = btn.getAttribute('data-key');
+          displaySpectrumContent(key);
+        });
+      });
+
+      displaySpectrumContent(keys[0]);
+    }
+
+    function displaySpectrumContent(key) {
+      const item = spectrumData[key];
+      const box = document.getElementById('spectrum-display-box');
+      if (!item || !box) return;
+      box.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span class="pill-tag">DIMENSION // ${item.title.toUpperCase()}</span>
+            <h3 style="font-size: 1.35rem; margin-top: 6px; color: #fff;">${item.question}</h3>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 20px; border-radius: var(--radius-sm);">
+            <span class="mono" style="font-size: 0.72rem; color: var(--cyan-bright); text-transform: uppercase;">Exploratory Examples</span>
+            <p style="font-size: 0.9rem; color: var(--text-primary); margin-top: 8px; line-height: 1.6;">${item.examples}</p>
+          </div>
+          <div style="background: rgba(0,229,255,0.03); border: 1px solid rgba(0,229,255,0.2); padding: 20px; border-radius: var(--radius-sm);">
+            <span class="mono" style="font-size: 0.72rem; color: var(--cyan-bright); text-transform: uppercase;">Naxxatra Execution Directive</span>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.6;">${item.naxxatraRole}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. Cascade Grid Render
+    function renderCascade() {
+      const flow = document.getElementById('cascade-flow');
+      if (!flow) return;
+      flow.innerHTML = cascadeData.map(c => `
+        <div class="cascade-item">
+          <span class="index">${c.num} // ARTIFACT</span>
+          <div class="title">${c.title}</div>
+          <div class="desc">${c.desc}</div>
+        </div>
+      `).join('');
+    }
+
+    // 6. Series IP Render
+    function renderSeries() {
+      const grid = document.getElementById('series-grid');
+      if (!grid) return;
+      grid.innerHTML = seriesData.map(s => `
+        <div class="series-card">
+          <div class="series-card-header">
+            <span class="series-number">${s.num}</span>
+            <span class="series-format-tag">${s.format}</span>
+          </div>
+          <div class="series-name">${s.name}</div>
+          <div class="series-premise">${s.premise}</div>
+          <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+            <span class="mono" style="font-size: 0.7rem; color: var(--cyan-bright);">SAMPLE PILOT INQUIRY:</span>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;"><em>"${s.pilot}"</em></p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 7. Inquiry Steps
+    function renderInquirySteps() {
+      const ladder = document.getElementById('inquiry-ladder');
+      if (!ladder) return;
+      ladder.innerHTML = inquirySteps.map((s, idx) => `
+        <div class="inquiry-step-row ${idx === 0 ? 'active' : ''}">
+          <span class="step-num">${s.step}</span>
+          <div>
+            <strong style="color: #fff; font-size: 0.85rem;">${s.name}</strong>
+            <span style="color: var(--text-secondary); font-size: 0.8rem; margin-left: 8px;">— ${s.desc}</span>
+          </div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.inquiry-step-row').forEach(row => {
+        row.addEventListener('click', () => {
+          document.querySelectorAll('.inquiry-step-row').forEach(r => r.classList.remove('active'));
+          row.classList.add('active');
+        });
+      });
+    }
+
+    // 8. Age Spectrum Bar
+    function renderAgeScale() {
+      const bar = document.getElementById('age-scale-bar');
+      if (!bar) return;
+      bar.innerHTML = ageLevels.map((lvl, idx) => `
+        <div class="age-level-btn ${idx === 2 ? 'active' : ''}" data-idx="${idx}">
+          <span class="lvl">${lvl.lvl}</span>
+          <span class="target">${lvl.target}</span>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.age-level-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.age-level-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const idx = parseInt(btn.getAttribute('data-idx'));
+          displayAgeLevel(idx);
+        });
+      });
+
+      displayAgeLevel(2);
+    }
+
+    function displayAgeLevel(idx) {
+      const item = ageLevels[idx];
+      const box = document.getElementById('age-level-content');
+      if (!item || !box) return;
+      box.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span class="pill-tag">${item.lvl} // TARGET: ${item.target.toUpperCase()}</span>
+            <h3 style="font-size: 1.25rem; margin-top: 6px;">Core Pedagogical Focus: ${item.focus}</h3>
+          </div>
+        </div>
+        <p style="font-size: 0.92rem; color: var(--text-primary); margin-bottom: 16px; line-height: 1.6;">${item.approach}</p>
+        <div style="background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--cyan-bright); padding: 12px 16px;">
+          <span class="mono" style="font-size: 0.72rem; color: var(--cyan-bright);">EXEMPLAR PROJECT (COSMIC RAYS AT THIS LEVEL):</span>
+          <p style="font-size: 0.88rem; color: #fff; margin-top: 4px;"><strong>${item.sample}</strong></p>
+        </div>
+      `;
+    }
+
+    // 9. Physics Bridges (22 Tags)
+    function renderPhysicsBridges() {
+      const cloud = document.getElementById('bridges-cloud');
+      if (!cloud) return;
+      cloud.innerHTML = physicsBridges.map((b, idx) => `
+        <div class="bridge-chip ${idx === 0 ? 'active' : ''}" data-id="${b.id}">${b.name}</div>
+      `).join('');
+
+      document.querySelectorAll('.bridge-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.bridge-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const id = chip.getAttribute('data-id');
+          displayBridgeInspector(id);
+        });
+      });
+
+      displayBridgeInspector(physicsBridges[0].id);
+    }
+
+    function displayBridgeInspector(id) {
+      const item = physicsBridges.find(b => b.id === id);
+      const inspector = document.getElementById('bridge-inspector');
+      if (!item || !inspector) return;
+      inspector.innerHTML = `
+        <div>
+          <span class="pill-tag green">SUBATOMIC-COSMIC COUPLING</span>
+          <h3 style="font-size: 1.35rem; margin: 8px 0 12px; color: #fff;">${item.name}</h3>
+          <div style="margin-bottom: 14px;">
+            <strong style="color: var(--cyan-bright); font-size: 0.85rem; font-family: var(--font-mono);">ASTROPHYSICAL PHENOMENON:</strong>
+            <p style="font-size: 0.9rem; color: var(--text-primary); margin-top: 4px;">${item.astro}</p>
+          </div>
+          <div>
+            <strong style="color: #b388ff; font-size: 0.85rem; font-family: var(--font-mono);">EXPERIMENTAL INSTRUMENTATION:</strong>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px;">${item.expt}</p>
+          </div>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; justify-content: center;">
+          <span class="mono" style="font-size: 0.7rem; color: var(--cyan-bright);">NAXXATRA PROJECT APPLICATION</span>
+          <p style="font-size: 0.85rem; color: #fff; margin-top: 6px;">
+            Connects student laboratory detector builds with real observatory datasets, illustrating how subatomic processes govern galaxies.
+          </p>
+        </div>
+      `;
+    }
+
+    // 10. History Forensic Inquiries
+    function renderHistoryQueries() {
+      const grid = document.getElementById('history-queries-grid');
+      if (!grid) return;
+      grid.innerHTML = historyQuestions.map(h => `
+        <div class="history-card">
+          <div class="query-num">${h.num}</div>
+          <div class="query-question">${h.q}</div>
+          <div class="query-hint">${h.hint}</div>
+        </div>
+      `).join('');
+    }
+
+    // 11. Constants & Units
+    let showingConstants = true;
+    function renderConstantsUnits(isConst = true) {
+      showingConstants = isConst;
+      const grid = document.getElementById('constants-grid');
+      const list = isConst ? constantsData : unitsData;
+      if (!grid) return;
+
+      grid.innerHTML = list.map((item, idx) => `
+        <div class="constant-btn ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
+          <span class="symbol">${item.sym}</span>
+          <span class="name">${item.name}</span>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.constant-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.constant-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const idx = parseInt(btn.getAttribute('data-idx'));
+          displayConstantInspector(idx);
+        });
+      });
+
+      displayConstantInspector(0);
+    }
+
+    function displayConstantInspector(idx) {
+      const list = showingConstants ? constantsData : unitsData;
+      const item = list[idx];
+      const panel = document.getElementById('constant-inspector-panel');
+      if (!item || !panel) return;
+
+      panel.innerHTML = `
+        <div>
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <span class="pill-tag">${showingConstants ? 'FUNDAMENTAL CONSTANT' : 'BASE SI UNIT'}</span>
+            <span class="mono" style="font-size: 1rem; color: var(--cyan-bright); font-weight: 700;">${item.sym}</span>
+          </div>
+          <h3 style="font-size: 1.4rem; color: #fff; margin-bottom: 6px;">${item.name}</h3>
+          <div class="mono" style="font-size: 0.95rem; color: var(--emerald-accent); margin-bottom: 16px;">${item.val}</div>
+
+          <div style="margin-bottom: 12px;">
+            <strong style="color: var(--amber-accent); font-size: 0.8rem; font-family: var(--font-mono);">THE HISTORICAL PROBLEM & CRISIS:</strong>
+            <p style="font-size: 0.88rem; color: var(--text-primary); margin-top: 2px;">${item.problem}</p>
+          </div>
+          <div>
+            <strong style="color: #b388ff; font-size: 0.8rem; font-family: var(--font-mono);">PRECISION INSTRUMENTATION:</strong>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">${item.instr}</p>
+          </div>
+        </div>
+        <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; justify-content: center;">
+          <span class="mono" style="font-size: 0.72rem; color: var(--cyan-bright); text-transform: uppercase;">Naxxatra Workshop Concept</span>
+          <p style="font-size: 0.88rem; color: #fff; margin-top: 6px; line-height: 1.5;">${item.exp}</p>
+          <div style="margin-top: 14px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+            2019 SI STANDARDS: FIXED & COHERENT
+          </div>
+        </div>
+      `;
+    }
+
+    const tabConstBtn = document.getElementById('tab-constants-btn');
+    const tabUnitsBtn = document.getElementById('tab-units-btn');
+    if (tabConstBtn && tabUnitsBtn) {
+      tabConstBtn.addEventListener('click', () => {
+        tabConstBtn.classList.add('active');
+        tabConstBtn.style.background = 'rgba(0, 229, 255, 0.08)';
+        tabConstBtn.style.color = 'var(--cyan-bright)';
+        tabUnitsBtn.classList.remove('active');
+        tabUnitsBtn.style.background = 'transparent';
+        tabUnitsBtn.style.color = 'var(--text-secondary)';
+        renderConstantsUnits(true);
+      });
+      tabUnitsBtn.addEventListener('click', () => {
+        tabUnitsBtn.classList.add('active');
+        tabUnitsBtn.style.background = 'rgba(0, 229, 255, 0.08)';
+        tabUnitsBtn.style.color = 'var(--cyan-bright)';
+        tabConstBtn.classList.remove('active');
+        tabConstBtn.style.background = 'transparent';
+        tabConstBtn.style.color = 'var(--text-secondary)';
+        renderConstantsUnits(false);
+      });
+    }
+
+    // 12. Creative Mediums Matrix
+    function renderMediumsMatrix() {
+      const grid = document.getElementById('mediums-matrix-grid');
+      if (!grid) return;
+      grid.innerHTML = mediumsMatrix.map(m => `
+        <div class="medium-matrix-card">
+          <div class="duo-tag">${m.duo}</div>
+          <div class="duo-title">${m.title}</div>
+          <div class="duo-desc">${m.desc}</div>
+        </div>
+      `).join('');
+    }
+
+    // 13. Project Spec Builder (14 Fields)
+    function renderSpecSheet(key = "last-signal") {
+      const data = specPresets[key];
+      const display = document.getElementById('spec-sheet-display');
+      if (!data || !display) return;
+
+      display.innerHTML = `
+        <div class="spec-field full-span">
+          <span class="spec-field-label">01. TITLE</span>
+          <span class="spec-field-value" style="font-size: 1.2rem; font-weight: 700; color: #fff;">${data.title}</span>
+        </div>
+        <div class="spec-field full-span">
+          <span class="spec-field-label">02. CORE QUESTION</span>
+          <span class="spec-field-value" style="color: var(--cyan-bright); font-size: 1rem;"><em>"${data.question}"</em></span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">03. SCIENTIFIC FOUNDATION</span>
+          <span class="spec-field-value">${data.foundation}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">04. PARTICIPANT EXPERIENCE</span>
+          <span class="spec-field-value">${data.experience}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">05. CREATIVE MEDIUM</span>
+          <span class="spec-field-value">${data.medium}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">06. TARGET AUDIENCE</span>
+          <span class="spec-field-value">${data.audience}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">07. DURATION</span>
+          <span class="spec-field-value">${data.duration}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">08. RESOURCES REQUIRED</span>
+          <span class="spec-field-value">${data.resources}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">09. TEAM COMPOSITION</span>
+          <span class="spec-field-value">${data.team}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">10. DELIVERABLES & OUTPUTS</span>
+          <span class="spec-field-value">${data.outputs}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">11. NAXXATRA VALUE</span>
+          <span class="spec-field-value">${data.naxxatraValue}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">12. POSSIBLE EXTENSION</span>
+          <span class="spec-field-value">${data.extension}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">13. RESEARCH POTENTIAL</span>
+          <span class="spec-field-value">${data.researchPotential}</span>
+        </div>
+        <div class="spec-field">
+          <span class="spec-field-label">14. SCIENTIFIC RIGOUR TIER</span>
+          <span class="spec-field-value" style="color: var(--emerald-accent); font-weight: 600;">${data.rigour}</span>
+        </div>
+      `;
+    }
+
+    document.querySelectorAll('.spec-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.spec-preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.getAttribute('data-preset');
+        renderSpecSheet(key);
+      });
+    });
+
+    // 14. Graveyard Filters
+    function renderGraveyard() {
+      const filterBar = document.getElementById('graveyard-filter-bar');
+      const listContainer = document.getElementById('graveyard-card-list');
+      if (!filterBar || !listContainer) return;
+
+      const categories = ["all", "needs funding", "needs equipment", "technical development", "experimental", "needs collaborator", "high-risk/high-reward"];
+      filterBar.innerHTML = categories.map((c, idx) => `
+        <button class="spec-preset-btn ${idx === 0 ? 'active' : ''}" data-cat="${c}">${c.toUpperCase()}</button>
+      `).join('');
+
+      renderGraveyardCards("all");
+
+      filterBar.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.getAttribute('data-cat');
+          renderGraveyardCards(cat);
+        });
+      });
+    }
+
+    function renderGraveyardCards(cat) {
+      const container = document.getElementById('graveyard-card-list');
+      if (!container) return;
+      const filtered = cat === "all" ? graveyardData : graveyardData.filter(g => g.cat === cat);
+
+      container.innerHTML = filtered.map(item => `
+        <div class="graveyard-item">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="pill-tag amber" style="font-size: 0.65rem;">${item.cat}</span>
+            <span class="mono" style="font-size: 0.7rem; color: var(--text-muted);">ARCHIVED</span>
+          </div>
+          <div style="font-size: 0.95rem; font-weight: 600; color: #fff;">${item.title}</div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">${item.reason}</p>
+        </div>
+      `).join('');
+    }
+
+    // 15. Second-Order Dominoes
+    function renderSecondOrderDominoes() {
+      const stepper = document.getElementById('second-order-stepper');
+      if (!stepper) return;
+      stepper.innerHTML = secondOrderDominoes.map((d, idx) => `
+        <div class="domino-node">
+          <span class="mono" style="color: var(--cyan-bright); font-size: 0.72rem;">${(idx + 1).toString().padStart(2, '0')}</span>
+          <span>${d}</span>
+          ${idx < secondOrderDominoes.length - 1 ? '<span class="arrow">→</span>' : ''}
+        </div>
+      `).join('');
+    }
+
+    // 16. Mindset Seven Render
+    function renderMindset() {
+      const grid = document.getElementById('mindset-seven-grid');
+      if (!grid) return;
+      grid.innerHTML = mindsetSeven.map(m => `
+        <div class="mindset-card">
+          <div class="num">CHECKLIST // ${m.num}</div>
+          <div class="question">${m.q}</div>
+          <div class="rationale">${m.r}</div>
+        </div>
+      `).join('');
+    }
+
+    /* ==========================================================================
+       4. GLOBAL QUICK SEARCH & NAVIGATOR (KEYBOARD HOTKEY: '/')
+       ========================================================================== */
+    const searchBackdrop = document.getElementById('search-modal-backdrop');
+    const searchInput = document.getElementById('global-search-input');
+    const searchResults = document.getElementById('search-results-list');
+    const openSearchBtn = document.getElementById('open-search-btn');
+
+    // Build Search Index
+    const searchIndex = [
+      { title: "8-Stage Pipeline (Thought to Research)", section: "hero", meta: "Pipeline // Core Lifecycle" },
+      { title: "12 Creative Facets (Physicist, Storyteller...)", section: "identity", meta: "Persona // Creative Identity" },
+      { title: "Naxxatra Institutional Context", section: "ecosystem", meta: "Ecosystem // Links" },
+      { title: "19 Living Scientific Mediums", section: "ecosystem", meta: "Mediums // Expression" },
+      { title: "The 8-Pillar Creative Spectrum", section: "spectrum", meta: "Spectrum // Science, Story..." },
+      { title: "The 1-to-10 Content Cascade", section: "content-cascade", meta: "Cascade // Multiplier" },
+      { title: "The Last Signal (Dual Observer Infall)", section: "content-cascade", meta: "Case Study // Relativity" },
+      { title: "9 Recurring Series IPs", section: "series", meta: "IP // Field Notes, Universe..." },
+      { title: "10-Step Inquiry Cycle vs Conventional Trap", section: "pedagogy", meta: "Pedagogy // Epistemology" },
+      { title: "6-Level Age Spectrum (Children to Advanced)", section: "age-ladder", meta: "Audience // Scaffolding" },
+      { title: "22 Nuclear & Particle Physics Bridges", section: "physics-bridges", meta: "Physics // Hadronic, EIC" },
+      { title: "History of Science: 10 Forensic Inquiries", section: "history", meta: "Epistemology // History" },
+      { title: "10 Fundamental Constants (c, h, G, α...)", section: "constants", meta: "Metrology // Constants" },
+      { title: "7 Base SI Units (Metre, Second, Kilogram...)", section: "constants", meta: "Metrology // 2019 SI" },
+      { title: "Creative Mediums Matrix (Music, Film, Blender...)", section: "mediums", meta: "Synergy // Matrix" },
+      { title: "14-Field Project Architecture Builder", section: "spec-builder", meta: "Architecture // Spec" },
+      { title: "Content Cadence (Daily to Annual)", section: "pipeline", meta: "Engine // Cadence" },
+      { title: "The Idea Graveyard Archive", section: "pipeline", meta: "Incubator // Archive" },
+      { title: "The Three Layers: Wonder, Science, Depth", section: "layers-and-chains", meta: "Layers // Scaffolding" },
+      { title: "Second-Order Cloud Chamber Dominoes", section: "layers-and-chains", meta: "Chains // Dominoes" },
+      { title: "Playbook: 'I Have An Idea' 7-Step Deconstruction", section: "playbooks", meta: "Protocol // Blueprint" },
+      { title: "Playbook: 'What Should I Do?' Strategic Compass", section: "playbooks", meta: "Protocol // Guidance" },
+      { title: "Scientific Cinematic Arc (Hook to Open Question)", section: "playbooks", meta: "Filmmaking // Story" },
+      { title: "Experiential Workshop Arc (Question to Create)", section: "playbooks", meta: "Workshops // Experiential" },
+      { title: "Scientific Rigour Demarcation Matrix", section: "rigour", meta: "Integrity // Pseudoscience" },
+      { title: "The Cardinal Axiom & The 7 Default Questions", section: "mindset", meta: "Mindset // First Principles" }
+    ];
+
+    function openSearch() {
+      searchBackdrop.classList.add('open');
+      searchInput.value = '';
+      searchInput.focus();
+      filterSearchResults('');
+    }
+
+    function closeSearch() {
+      searchBackdrop.classList.remove('open');
+    }
+
+    if (openSearchBtn) openSearchBtn.addEventListener('click', openSearch);
+
+    searchBackdrop.addEventListener('click', (e) => {
+      if (e.target === searchBackdrop) closeSearch();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        openSearch();
+      }
+      if (e.key === 'Escape') {
+        closeSearch();
+        if (roleModalOverlay) roleModalOverlay.classList.remove('open');
+      }
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      filterSearchResults(e.target.value);
+    });
+
+    function filterSearchResults(query) {
+      const q = query.toLowerCase().trim();
+      const hits = searchIndex.filter(item => 
+        item.title.toLowerCase().includes(q) || 
+        item.meta.toLowerCase().includes(q)
+      );
+
+      if (hits.length === 0) {
+        searchResults.innerHTML = `
+          <div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.88rem;">
+            No scientific systems matching "${query}"
+          </div>
+        `;
+        return;
+      }
+
+      searchResults.innerHTML = hits.map(hit => `
+        <li class="search-result-item" data-section="${hit.section}">
+          <div class="item-title">${hit.title}</div>
+          <div class="item-meta">
+            <span class="mono">${hit.meta}</span>
+          </div>
+        </li>
+      `).join('');
+
+      searchResults.querySelectorAll('.search-result-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const secId = el.getAttribute('data-section');
+          closeSearch();
+          const target = document.getElementById(secId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       5. INITIALIZE ALL OPERATING SYSTEM MODULES
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPipeline();
+      renderRoles();
+      renderMediums19();
+      renderSpectrumTabs();
+      renderCascade();
+      renderSeries();
+      renderInquirySteps();
+      renderAgeScale();
+      renderPhysicsBridges();
+      renderHistoryQueries();
+      renderConstantsUnits(true);
+      renderMediumsMatrix();
+      renderSpecSheet("last-signal");
+      renderGraveyard();
+      renderSecondOrderDominoes();
+      renderMindset();
+    });
+  </script>
+</body>
+</html>
