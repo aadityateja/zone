@@ -1,1 +1,1315 @@
-empy
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NAXXATRA CLOUD SCHOOL — 90 Days</title>
+
+<style>
+:root{
+    --bg:#05070a;
+    --text:#f4f7fa;
+    --muted:#aeb7c2;
+    --line:rgba(255,255,255,.12);
+    --blue:#8ccfff;
+    --cyan:#d8f4ff;
+    --dark:#080d13;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+canvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-5;
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:20;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:25px 5vw;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:50;
+    mix-blend-mode:normal;
+}
+
+.logo{
+    font-weight:700;
+    letter-spacing:.22em;
+    font-size:13px;
+}
+
+.nav-right{
+    display:flex;
+    gap:28px;
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
+
+.nav-right a{
+    color:white;
+    text-decoration:none;
+    opacity:.65;
+    transition:.3s;
+}
+
+.nav-right a:hover{
+    opacity:1;
+}
+
+section{
+    position:relative;
+    min-height:100vh;
+    padding:120px 8vw;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.hero{
+    min-height:100vh;
+    padding-left:9vw;
+    overflow:hidden;
+}
+
+.hero-small{
+    font-size:11px;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:30px;
+}
+
+.hero h1{
+    font-size:clamp(70px,13vw,190px);
+    line-height:.78;
+    letter-spacing:-.07em;
+    font-weight:800;
+    max-width:1000px;
+}
+
+.hero h1 span{
+    color:transparent;
+    -webkit-text-stroke:1px rgba(255,255,255,.7);
+}
+
+.hero-sub{
+    max-width:580px;
+    margin-top:45px;
+    color:#c5ced7;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.scroll{
+    position:absolute;
+    bottom:40px;
+    left:9vw;
+    font-size:10px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:#89939e;
+}
+
+.big-question{
+    font-size:clamp(50px,9vw,135px);
+    letter-spacing:-.06em;
+    line-height:.85;
+    max-width:1100px;
+}
+
+.big-question span{
+    color:#94d9ff;
+}
+
+.statement{
+    max-width:750px;
+    margin-top:45px;
+    font-size:22px;
+    line-height:1.6;
+    color:#c5cdd5;
+}
+
+.atmosphere{
+    background:
+        radial-gradient(circle at 70% 20%,rgba(130,200,255,.13),transparent 35%),
+        linear-gradient(180deg,#07111b,#05070a);
+}
+
+.physics-grid{
+    margin-top:70px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.physics-card{
+    min-height:330px;
+    padding:40px;
+    background:rgba(5,7,10,.78);
+    backdrop-filter:blur(8px);
+}
+
+.physics-number{
+    font-size:12px;
+    color:#80caff;
+    letter-spacing:.2em;
+    margin-bottom:50px;
+}
+
+.physics-card h3{
+    font-size:32px;
+    letter-spacing:-.04em;
+    margin-bottom:20px;
+}
+
+.physics-card p{
+    color:#9faab5;
+    line-height:1.7;
+    font-size:15px;
+}
+
+.connection{
+    background:
+        radial-gradient(circle at 50% 50%,rgba(100,190,255,.12),transparent 40%);
+}
+
+.connection-line{
+    margin:70px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.node{
+    border:1px solid rgba(160,220,255,.35);
+    padding:20px 28px;
+    background:rgba(10,20,28,.65);
+    backdrop-filter:blur(10px);
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+}
+
+.arrow{
+    color:#80caff;
+    font-size:24px;
+}
+
+.cloud-definition{
+    max-width:900px;
+    font-size:clamp(32px,5vw,72px);
+    line-height:1.02;
+    letter-spacing:-.04em;
+}
+
+.cloud-definition strong{
+    color:#9edfff;
+}
+
+.dark{
+    background:#030507;
+}
+
+.cloud-school{
+    background:
+        radial-gradient(circle at 30% 30%,rgba(100,190,255,.12),transparent 35%),
+        radial-gradient(circle at 80% 70%,rgba(255,255,255,.06),transparent 30%);
+}
+
+.eyebrow{
+    font-size:11px;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:#82909d;
+    margin-bottom:30px;
+}
+
+.school-title{
+    font-size:clamp(60px,11vw,150px);
+    letter-spacing:-.07em;
+    line-height:.82;
+}
+
+.school-title span{
+    color:#8ed6ff;
+}
+
+.school-copy{
+    max-width:680px;
+    margin-top:40px;
+    color:#b7c0c9;
+    font-size:19px;
+    line-height:1.7;
+}
+
+.journey{
+    margin-top:90px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+.phase{
+    padding:35px 25px;
+    min-height:230px;
+    border-right:1px solid var(--line);
+    transition:.4s;
+}
+
+.phase:last-child{
+    border-right:none;
+}
+
+.phase:hover{
+    background:rgba(120,200,255,.07);
+}
+
+.phase-number{
+    color:#79c9ff;
+    font-size:11px;
+    letter-spacing:.2em;
+}
+
+.phase h3{
+    font-size:24px;
+    margin:50px 0 15px;
+}
+
+.phase p{
+    color:#8e99a4;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.manifesto{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#020304;
+}
+
+.manifesto h2{
+    font-size:clamp(60px,12vw,180px);
+    line-height:.78;
+    letter-spacing:-.08em;
+}
+
+.manifesto h2 span{
+    color:#8bd5ff;
+}
+
+.manifesto p{
+    margin:50px auto 0;
+    max-width:650px;
+    color:#aab4bd;
+    font-size:19px;
+    line-height:1.7;
+}
+
+.frontier{
+    background:
+        radial-gradient(circle at 50% 30%,rgba(150,220,255,.16),transparent 35%),
+        #04080c;
+}
+
+.frontier h2{
+    font-size:clamp(70px,14vw,200px);
+    line-height:.78;
+    letter-spacing:-.08em;
+}
+
+.frontier h2 span{
+    color:transparent;
+    -webkit-text-stroke:1px #9edfff;
+}
+
+.frontier p{
+    margin-top:50px;
+    max-width:700px;
+    font-size:21px;
+    line-height:1.7;
+    color:#b9c3cc;
+}
+
+.cta{
+    display:inline-flex;
+    margin-top:45px;
+    padding:18px 28px;
+    border:1px solid rgba(180,230,255,.5);
+    color:white;
+    text-decoration:none;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    transition:.3s;
+}
+
+.cta:hover{
+    background:white;
+    color:#05070a;
+}
+
+.final{
+    min-height:80vh;
+    text-align:center;
+    align-items:center;
+    background:#020304;
+}
+
+.final h2{
+    font-size:clamp(50px,9vw,130px);
+    line-height:.82;
+    letter-spacing:-.07em;
+}
+
+.final h2 span{
+    color:#91d8ff;
+}
+
+.final p{
+    margin-top:35px;
+    color:#89949e;
+}
+
+@media(max-width:850px){
+
+    .nav-right{
+        display:none;
+    }
+
+    section{
+        padding:100px 7vw;
+    }
+
+    .hero{
+        padding-left:7vw;
+    }
+
+    .physics-grid{
+        grid-template-columns:1fr;
+    }
+
+    .journey{
+        grid-template-columns:1fr;
+    }
+
+    .phase{
+        border-right:none;
+        border-bottom:1px solid var(--line);
+    }
+
+    .connection-line{
+        flex-direction:column;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="sky"></canvas>
+<div class="noise"></div>
+
+<nav>
+    <div class="logo">NAXXATRA / CLOUD SCHOOL</div>
+
+    <div class="nav-right">
+        <a href="#cloud">Cloud</a>
+        <a href="#school">School</a>
+        <a href="#journey">90 Days</a>
+        <a href="#frontier">Frontier</a>
+    </div>
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="hero-small">
+        NAXXATRA PRESENTS
+    </div>
+
+    <h1>
+        CLOUD<br>
+        <span>SCHOOL</span>
+    </h1>
+
+    <div class="hero-sub">
+        90 days. One question. One prototype. One big idea.
+        <br><br>
+        A distributed learning ecosystem for people who don't
+        want to simply learn about the world — but investigate it,
+        build within it and change it.
+    </div>
+
+    <div class="scroll">
+        ↓ enter the atmosphere
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     REAL CLOUD
+========================================================= -->
+
+<section id="cloud" class="atmosphere">
+
+    <div class="eyebrow">
+        Before we talk about school
+    </div>
+
+    <div class="big-question">
+        WHAT<br>
+        <span>IS</span><br>
+        A CLOUD?
+    </div>
+
+    <div class="statement">
+        Look up.
+        <br><br>
+        A cloud looks like an object.
+        But it isn't one.
+        <br><br>
+        It is a dynamic system of countless tiny
+        water droplets and ice crystals moving through
+        a constantly changing atmosphere.
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CLOUD PHYSICS
+========================================================= -->
+
+<section class="atmosphere">
+
+    <div class="eyebrow">
+        Atmospheric physics
+    </div>
+
+    <div class="cloud-definition">
+        A cloud is not a thing
+        <strong>floating in the sky.</strong>
+        It is a process happening
+        <strong>inside the atmosphere.</strong>
+    </div>
+
+    <div class="physics-grid">
+
+        <div class="physics-card">
+
+            <div class="physics-number">01 / WHY IS IT UP?</div>
+
+            <h3>It isn't weightless.</h3>
+
+            <p>
+                Water has mass. Clouds have mass.
+                But individual droplets are incredibly small.
+                Air currents, turbulence and buoyancy can keep
+                them suspended while gravity continually pulls
+                them downward.
+            </p>
+
+        </div>
+
+
+        <div class="physics-card">
+
+            <div class="physics-number">02 / WHY DOESN'T IT FALL?</div>
+
+            <h3>Because the system moves.</h3>
+
+            <p>
+                Droplets are constantly falling, evaporating,
+                growing and being replaced. Rising air can carry
+                tiny droplets upward while evaporation removes
+                others.
+                The cloud stays visible because the process
+                continuously renews itself.
+            </p>
+
+        </div>
+
+
+        <div class="physics-card">
+
+            <div class="physics-number">03 / WHAT HAPPENS INSIDE?</div>
+
+            <h3>Everything is moving.</h3>
+
+            <p>
+                Condensation. Evaporation. Updrafts.
+                Downdrafts. Ice formation. Collisions.
+                Charge separation.
+                A cloud is an active physical environment.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LIGHTNING
+========================================================= -->
+
+<section class="dark">
+
+    <div class="eyebrow">
+        When the atmosphere becomes unstable
+    </div>
+
+    <div class="big-question">
+        THEN<br>
+        <span>THUNDER</span><br>
+        HAPPENS.
+    </div>
+
+    <div class="statement">
+
+        Inside powerful storm clouds, strong vertical
+        air currents drive collisions between water droplets,
+        ice crystals and graupel.
+
+        <br><br>
+
+        Charge becomes separated.
+
+        <br><br>
+
+        The electric field grows.
+
+        <br><br>
+
+        And eventually—
+
+        <br><br>
+
+        <strong style="color:#d8f4ff;font-size:1.3em;">
+            the atmosphere breaks down.
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LIGHTNING → SYSTEM
+========================================================= -->
+
+<section class="connection">
+
+    <div class="eyebrow">
+        A cloud is a network
+    </div>
+
+    <div class="big-question">
+        NOTHING<br>
+        EXISTS<br>
+        <span>ALONE.</span>
+    </div>
+
+    <div class="connection-line">
+
+        <div class="node">water</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">air</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">energy</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">charge</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">storm</div>
+
+    </div>
+
+    <div class="statement">
+
+        Change one part of the system,
+        and the rest responds.
+
+        <br><br>
+
+        That is what makes a cloud interesting.
+
+        <br><br>
+
+        And it is exactly what makes
+        <strong>Cloud School</strong> different.
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CLOUD SCHOOL CONNECTION
+========================================================= -->
+
+<section id="school" class="cloud-school">
+
+    <div class="eyebrow">
+        Now look at learning differently
+    </div>
+
+    <div class="school-title">
+        CLOUD<br>
+        <span>SCHOOL</span>
+    </div>
+
+    <div class="school-copy">
+
+        Cloud School does not mean online school.
+
+        <br><br>
+
+        Just as an atmospheric cloud is not one object
+        in one location, learning does not have to live
+        inside one classroom.
+
+        <br><br>
+
+        Knowledge can exist across people, places,
+        laboratories, industries, universities,
+        communities and environments.
+
+        <br><br>
+
+        <strong>
+        Cloud School connects them.
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DISTRIBUTED LEARNING
+========================================================= -->
+
+<section class="connection">
+
+    <div class="eyebrow">
+        One learning environment
+    </div>
+
+    <div class="connection-line">
+
+        <div class="node">nature</div>
+        <div class="arrow">→</div>
+        <div class="node">laboratory</div>
+        <div class="arrow">→</div>
+        <div class="node">industry</div>
+
+    </div>
+
+    <div class="connection-line">
+
+        <div class="node">university</div>
+        <div class="arrow">→</div>
+        <div class="node">community</div>
+        <div class="arrow">→</div>
+        <div class="node">research</div>
+
+    </div>
+
+    <div class="connection-line">
+
+        <div class="node">studio</div>
+        <div class="arrow">→</div>
+        <div class="node">prototype</div>
+        <div class="arrow">→</div>
+        <div class="node">contest</div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     90 DAYS
+========================================================= -->
+
+<section id="journey" class="cloud-school">
+
+    <div class="eyebrow">
+        The 90-day journey
+    </div>
+
+    <div class="big-question">
+        ONE QUESTION.<br>
+        ONE <span>JOURNEY.</span>
+    </div>
+
+    <div class="journey">
+
+        <div class="phase">
+
+            <div class="phase-number">01</div>
+
+            <h3>QUESTION</h3>
+
+            <p>
+                Start with something you cannot stop thinking about.
+                Turn curiosity into a question worth investigating.
+            </p>
+
+        </div>
+
+
+        <div class="phase">
+
+            <div class="phase-number">02</div>
+
+            <h3>EXPLORE</h3>
+
+            <p>
+                Go into the field. Find evidence.
+                Talk to people. Research.
+                Discover what you didn't know.
+            </p>
+
+        </div>
+
+
+        <div class="phase">
+
+            <div class="phase-number">03</div>
+
+            <h3>BUILD</h3>
+
+            <p>
+                Stop talking about the idea.
+                Make something.
+                Your first prototype can be rough.
+            </p>
+
+        </div>
+
+
+        <div class="phase">
+
+            <div class="phase-number">04</div>
+
+            <h3>TEST</h3>
+
+            <p>
+                Attack your own assumptions.
+                Measure.
+                Fail.
+                Iterate.
+            </p>
+
+        </div>
+
+
+        <div class="phase">
+
+            <div class="phase-number">05</div>
+
+            <h3>TRANSMIT</h3>
+
+            <p>
+                Tell the story.
+                Demonstrate what you discovered.
+                Share what comes next.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NOT A POLISHED SCIENCE FAIR
+========================================================= -->
+
+<section class="manifesto">
+
+    <div>
+
+        <div class="eyebrow">
+            What actually matters
+        </div>
+
+        <h2>
+            NOT THE<br>
+            <span>POLISH.</span>
+        </h2>
+
+        <p>
+            A beautiful prototype built on a shallow idea
+            is not the goal.
+
+            <br><br>
+
+            The question.
+            The reasoning.
+            The experiment.
+            The evidence.
+            The failure.
+            The iteration.
+
+            <br><br>
+
+            That's where the real learning happens.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WORLD BUILDER
+========================================================= -->
+
+<section class="dark">
+
+    <div class="eyebrow">
+        The identity
+    </div>
+
+    <div class="big-question">
+
+        OBSERVE.<br>
+        QUESTION.<br>
+        CONNECT.<br>
+        <span>BUILD.</span><br>
+        TEST.<br>
+        ITERATE.<br>
+        CONTRIBUTE.
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MANY MINDS
+========================================================= -->
+
+<section class="connection">
+
+    <div class="eyebrow">
+        One world. Many ways of seeing.
+    </div>
+
+    <div class="cloud-definition">
+
+        A physicist sees one thing.
+
+        <br>
+
+        A farmer sees another.
+
+        <br>
+
+        An engineer sees another.
+
+        <br>
+
+        A designer sees another.
+
+        <br>
+
+        A poet sees another.
+
+        <br><br>
+
+        <strong>
+        What can you build between them?
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     UNFINISHED WORLD
+========================================================= -->
+
+<section class="dark">
+
+    <div class="eyebrow">
+        The world-builder manifesto
+    </div>
+
+    <div class="big-question">
+
+        THE WORLD<br>
+        IS<br>
+        <span>UNFINISHED.</span>
+
+    </div>
+
+    <div class="statement">
+
+        Water is unsolved.
+
+        <br>
+
+        Energy is unsolved.
+
+        <br>
+
+        Cities are unsolved.
+
+        <br>
+
+        Soils are unsolved.
+
+        <br>
+
+        Materials are unsolved.
+
+        <br>
+
+        Stories are unsolved.
+
+        <br><br>
+
+        Someone will work on them.
+
+        <br><br>
+
+        <strong style="color:white;">
+            Might as well begin now.
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     90 → 2047
+========================================================= -->
+
+<section class="cloud-school">
+
+    <div class="eyebrow">
+        The long game
+    </div>
+
+    <div class="big-question">
+
+        90 DAYS<br>
+        <span>→</span><br>
+        2047
+
+    </div>
+
+    <div class="statement">
+
+        One project cannot build a nation.
+
+        <br><br>
+
+        But generations of curious,
+        capable people can build
+        the capabilities required
+        for one.
+
+        <br><br>
+
+        Curiosity → Agency → Scientific Thinking
+        → Interdisciplinary Capability
+        → Innovation → Research → Impact.
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FRONTIER
+========================================================= -->
+
+<section id="frontier" class="frontier">
+
+    <div class="eyebrow">
+        Day 90
+    </div>
+
+    <h2>
+        THE<br>
+        <span>FRONTIER</span>
+    </h2>
+
+    <p>
+
+        The frontier is not a place.
+
+        <br>
+
+        It is the edge of what you currently understand.
+
+        <br><br>
+
+        Every frontier was once somebody's unanswered question.
+
+        <br><br>
+
+        You have 90 days to walk past yours.
+
+    </p>
+
+    <a href="#" class="cta">
+        Stand where the map ends →
+    </a>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL
+========================================================= -->
+
+<section class="final">
+
+    <div class="eyebrow">
+        NAXXATRA CLOUD SCHOOL
+    </div>
+
+    <h2>
+        YOU BRING<br>
+        THE <span>QUESTION.</span>
+    </h2>
+
+    <p>
+        We build the environment around it.
+    </p>
+
+    <a href="#" class="cta">
+        Enter Cloud School →
+    </a>
+
+</section>
+
+
+<script>
+
+/* ============================================================
+   ATMOSPHERIC PARTICLE FIELD
+============================================================ */
+
+const canvas = document.getElementById("sky");
+const ctx = canvas.getContext("2d");
+
+let W, H;
+
+function resize(){
+    W = canvas.width = window.innerWidth * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+const particles = [];
+
+function createParticles(){
+
+    particles.length = 0;
+
+    const count = Math.min(
+        900,
+        Math.floor(window.innerWidth * window.innerHeight / 8500)
+    );
+
+    for(let i=0;i<count;i++){
+
+        particles.push({
+
+            x:Math.random()*window.innerWidth,
+            y:Math.random()*window.innerHeight,
+
+            r:Math.random()*1.7+.2,
+
+            vx:(Math.random()-.5)*.12,
+            vy:(Math.random()-.5)*.08,
+
+            alpha:Math.random()*.5+.1,
+
+            phase:Math.random()*Math.PI*2
+
+        });
+
+    }
+}
+
+createParticles();
+
+function drawParticles(t){
+
+    ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    for(const p of particles){
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        p.phase += .005;
+
+        if(p.x < -10) p.x = window.innerWidth+10;
+        if(p.x > window.innerWidth+10) p.x = -10;
+
+        if(p.y < -10) p.y = window.innerHeight+10;
+        if(p.y > window.innerHeight+10) p.y = -10;
+
+        const glow =
+            p.alpha +
+            Math.sin(p.phase)*.08;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            "rgba(160,215,245,"+
+            Math.max(.03,glow)+")";
+
+        ctx.fill();
+
+    }
+
+    requestAnimationFrame(drawParticles);
+
+}
+
+requestAnimationFrame(drawParticles);
+
+
+/* ============================================================
+   OCCASIONAL LIGHTNING
+============================================================ */
+
+let lightningTimeout;
+
+function lightning(){
+
+    const flash =
+        document.createElement("div");
+
+    flash.style.position="fixed";
+    flash.style.inset="0";
+    flash.style.background="rgba(220,245,255,.12)";
+    flash.style.pointerEvents="none";
+    flash.style.zIndex="15";
+
+    document.body.appendChild(flash);
+
+    setTimeout(()=>{
+        flash.remove();
+    },90);
+
+    setTimeout(()=>{
+        if(Math.random()<.7) lightning();
+    },4000+Math.random()*9000);
+
+}
+
+setTimeout(lightning,5000);
+
+
+/* ============================================================
+   SCROLL REACTIVE ATMOSPHERE
+============================================================ */
+
+window.addEventListener("scroll",()=>{
+
+    const y = window.scrollY;
+
+    const intensity =
+        Math.min(y/1800,.25);
+
+    canvas.style.opacity =
+        String(.45 + intensity);
+
+});
+
+</script>
+
+</body>
+</html>
