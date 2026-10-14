@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#030308">
+  
+<link rel="stylesheet" href="style.css">
+
+  <title>ASYMMETRY — The School | Naxxatra</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #030308;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      display: block;
+      z-index: 0;
+    }
+
+    .identity {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .title {
+      color: #effaff;
+      font-size: clamp(2.2rem, 8vw, 6rem);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      padding-left: 0.12em;
+      text-shadow:
+        0 0 14px rgba(65, 190, 255, 0.65),
+        0 0 45px rgba(100, 75, 255, 0.3);
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    .subtitle {
+      color: #b5d7ed;
+      font-size: 11px;
+      letter-spacing: 0.5em;
+      padding-left: 0.5em;
+      margin-top: 20px;
+    }
+
+    .line {
+      width: 60px;
+      height: 1px;
+      margin-top: 25px;
+      background: linear-gradient(
+        90deg, transparent, #64dcff, #a68aff, transparent
+      );
+      box-shadow: 0 0 12px #64dcff;
+    }
+
+    .credit {
+      color: rgba(190, 210, 235, 0.75);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      padding-left: 0.35em;
+      margin-top: 17px;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.88; }
+      50% { opacity: 1; }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+</head>
+
+<body>
+  <main class="identity">
+    <h1 class="title">ASYMMETRY</h1>
+    <p class="subtitle">THE SCHOOL</p>
+    <div class="line"></div>
+    <p class="credit">BY NAXXATRA</p>
+  </main>
+
+  <!-- The animation code is loaded separately -->
+  <script src="script.js"></script>
+</body>
+</html>
