@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE EXAM — ASYMMETRY</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;600&display=swap');
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: #070707;
+  color: #ededed;
+  font-family: Inter, sans-serif;
+}
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+nav, main, footer { position: relative; z-index: 1; }
+nav {
+  position: fixed;
+  inset: 0 0 auto;
+  padding: 22px 6%;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(#070707dd, transparent);
+  font: 10px 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  z-index: 5;
+}
+nav a { color: #aaa; text-decoration: none; }
+section {
+  min-height: 100vh;
+  padding: 120px 9%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero { text-align: center; align-items: center; }
+.eyebrow {
+  color: #888;
+  font: 10px 'IBM Plex Mono', monospace;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+h1 {
+  font-size: clamp(54px, 12vw, 150px);
+  font-weight: 300;
+  letter-spacing: -.09em;
+  margin: 30px 0;
+}
+h2 {
+  font-size: clamp(35px, 6vw, 70px);
+  font-weight: 300;
+  letter-spacing: -.055em;
+  max-width: 850px;
+  margin: 24px 0;
+}
+p {
+  max-width: 600px;
+  line-height: 1.9;
+  color: #a7a7a7;
+  font-size: 15px;
+}
+button, .link {
+  color: #eee;
+  border: 1px solid #444;
+  background: #101010;
+  padding: 15px 23px;
+  margin-top: 25px;
+  cursor: pointer;
+  font: 11px 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  transition: .25s;
+}
+button:hover {
+  background: #eee;
+  color: #070707;
+}
+.center { align-items: center; text-align: center; }
+.paper {
+  border: 1px solid #454545;
+  background: #101010e8;
+  padding: clamp(24px, 6vw, 60px);
+  max-width: 720px;
+  width: 100%;
+  margin-top: 35px;
+}
+.question {
+  font: clamp(17px, 3vw, 25px) 'IBM Plex Mono', monospace;
+  line-height: 1.8;
+  color: #eee;
+}
+.memories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  max-width: 850px;
+  margin-top: 35px;
+}
+.memory {
+  border: 1px solid #303030;
+  padding: 23px;
+  cursor: pointer;
+  background: #0a0a0ae8;
+  text-align: left;
+  transition: .3s;
+}
+.memory:hover { border-color: #aaa; transform: translateY(-3px); }
+.memory h3 {
+  font: 12px 'IBM Plex Mono', monospace;
+  font-weight: 400;
+}
+.memory p { font-size: 12px; }
+#memoryOutput {
+  min-height: 90px;
+  margin-top: 25px;
+  border-left: 1px solid #aaa;
+  padding-left: 20px;
+}
+footer {
+  padding: 35px 8%;
+  color: #777;
+  font: 10px 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+@media(max-width:600px) {
+  section { padding: 100px 7%; }
+  nav { padding: 18px 6%; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <span>ASYMMETRY / 001</span>
+  <a href="#exam">THE EXPERIMENT</a>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div class="eyebrow">An experiment in thought</div>
+  <h1>THE EXAM</h1>
+  <p>
+    One room. One person. One question.<br>
+    Nothing to copy. Nowhere to look.
+  </p>
+  <button onclick="enterExam()">ENTER THE ROOM ↗</button>
+  <p style="font:10px 'IBM Plex Mono',monospace">
+    SCROLL TO BEGIN
+  </p>
+</section>
+
+<section class="center" id="exam">
+  <div class="eyebrow">Examination / 001</div>
+  <h2>You are the only student.</h2>
+  <p>
+    A classroom surrounds you. Every table is empty except yours.
+    A camera watches from each corner. There is a clock on the wall.
+    On your desk, a sheet of paper.
+  </p>
+  <p>The speaker activates.</p>
+  <p style="color:#eee;font-family:'IBM Plex Mono',monospace">
+    "You may begin."
+  </p>
+  <div class="paper">
+    <div class="eyebrow">Question 01 / Physics</div>
+    <p class="question" id="question">
+      Consider a physical system whose complete state is unknown.
+      What can you infer from the observations available to you?
+    </p>
+    <p>
+      Show your reasoning. State your assumptions.
+      You may begin anywhere.
+    </p>
+    <button onclick="revealQuestion()">READ AGAIN</button>
+  </div>
+</section>
+
+<section id="memory">
+  <div class="eyebrow">Phase II / Memory</div>
+  <h2>The question opens a door.</h2>
+  <p>
+    You pick up the pen. An equation appears in your mind.
+    Then a classroom. A forgotten derivation. A mistake.
+    Something a teacher once said.
+  </p>
+  <p>
+    Your memories are not answers. They are places you can search.
+  </p>
+  <div class="memories">
+    <button class="memory" onclick="showMemory(0)">
+      <h3>01 / THE FIRST PRINCIPLE</h3>
+      <p>Everything begins with an assumption.</p>
+    </button>
+    <button class="memory" onclick="showMemory(1)">
+      <h3>02 / THE MISTAKE</h3>
+      <p>The answer you once believed.</p>
+    </button>
+    <button class="memory" onclick="showMemory(2)">
+      <h3>03 / THE CONNECTION</h3>
+      <p>Two unrelated ideas meet.</p>
+    </button>
+    <button class="memory" onclick="showMemory(3)">
+      <h3>04 / THE UNKNOWN</h3>
+      <p>The thing you cannot explain.</p>
+    </button>
+  </div>
+  <div id="memoryOutput">
+    <p>Select a memory. Let it change the room.</p>
+  </div>
+</section>
+
+<section id="observer">
+  <div class="eyebrow">Phase III / Observation</div>
+  <h2>Who is observing whom?</h2>
+  <p>
+    You look at the camera. You wonder what it records.
+    Your movements. Your hesitation. The answer on your paper.
+  </p>
+  <p>
+    Can it measure your understanding? Can it see the thought
+    that never becomes a word?
+  </p>
+  <p>
+    Move your cursor. The geometry responds to you.
+    The visualization is a metaphor, not a literal quantum
+    measurement experiment.
+  </p>
+  <button onclick="changePhase(3)">LOOK CLOSER ↗</button>
+</section>
+
+<section class="center" id="ending">
+  <div class="eyebrow">Final phase / Submission</div>
+  <h2>The clock stops.</h2>
+  <p>
+    You have an answer. Perhaps it is correct. Perhaps it isn't.
+    You put down the pen.
+  </p>
+  <p>For the first time, the room is completely still.</p>
+  <button onclick="showEnding(0)">SUBMIT MY ANSWER</button>
+  <button onclick="showEnding(1)">I DON'T KNOW</button>
+  <h2 id="finalLine" style="font-size:clamp(28px,5vw,56px)">
+  </h2>
+  <button onclick="restartExam()">BEGIN AGAIN ↺</button>
+</section>
+</main>
+
+<footer>
+  <span>ASYMMETRY — THE SCHOOL</span>
+  <span>BY NAXXATRA</span>
+</footer>
+
+<script>
+let particles = [];
+let phase = 0;
+let t = 0;
+let reveal = 0;
+let reducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+).matches;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  for (let i = 0; i < 115; i++) {
+    particles.push({
+      x: random(width),
+      y: random(height),
+      speed: random(.15, .7),
+      size: random(.5, 2)
+    });
+  }
+}
+
+function draw() {
+  clear();
+  t += reducedMotion ? 0 : .007;
+  reveal = lerp(reveal, phase, .025);
+
+  noStroke();
+  for (let p of particles) {
+    p.x += sin(t + p.y * .01) * p.speed;
+    p.y -= p.speed * .45;
+
+    if (p.y < 0) p.y = height;
+    if (p.x < 0) p.x = width;
+    if (p.x > width) p.x = 0;
+
+    fill(225, 225, 225, phase === 0 ? 65 : 90);
+    circle(p.x, p.y, p.size);
+  }
+
+  // Central examination desk: architectural line art
+  if (phase <= 1) drawDesk();
+
+  // Memories emerge as an evolving mathematical field
+  if (phase >= 1) drawEquations();
+
+  // Observation geometry responds to the pointer
+  if (phase >= 2) drawObserver();
+
+  // Final asymmetric infinity
+  if (phase >= 3) drawInfinity();
+}
+
+function drawDesk() {
+  let cx = width / 2;
+  let cy = height * .53;
+  let s = min(width, height) * .25;
+  let wobble = phase === 0 ? 0 : sin(t * 2) * 2;
+
+  stroke(220, 220, 220, 65);
+  strokeWeight(.7);
+  noFill();
+  beginShape();
+  vertex(cx-s, cy-s*.12);
+  vertex(cx+s, cy-s*.12);
+  vertex(cx+s*.8, cy+s*.25);
+  vertex(cx-s*.8, cy+s*.25);
+  endShape(CLOSE);
+  line(cx-s*.7, cy+s*.25, cx-s*.7, cy+s*.55);
+  line(cx+s*.7, cy+s*.25, cx+s*.7, cy+s*.55);
+  line(cx-s*.7, cy+s*.55, cx+s*.7, cy+s*.55);
+
+  // Paper
+  push();
+  translate(cx+wobble, cy-s*.05);
+  rotate(-.04);
+  rectMode(CENTER);
+  rect(0, 0, s*.65, s*.37);
+  line(-s*.23, -s*.07, s*.20, -s*.07);
+  line(-s*.23, 0, s*.15, 0);
+  line(-s*.23, s*.07, s*.07, s*.07);
+  pop();
+}
+
+function drawEquations() {
+  push();
+  textFont('monospace');
+  textSize(13);
+  textAlign(CENTER);
+  let symbols = [
+    'E = mc²', 'ψ(x,t)', '∇ · E = ρ/ε₀',
+    'Δx Δp ≥ ℏ/2', 'F = ma', 'P(A|B)'
+  ];
+
+  for (let i = 0; i < symbols.length; i++) {
+    let angle = t * (i % 2 ? 1 : -1) + i * TWO_PI / symbols.length;
+    let radius = min(width, height) * (.19 + .035 * sin(t+i));
+    let x = width/2 + cos(angle)*radius;
+    let y = height/2 + sin(angle)*radius*.6;
+    fill(220, 220, 220, 35 + 25*sin(t*2+i));
+    noStroke();
+    text(symbols[i], x, y);
+  }
+  pop();
+}
+
+function drawObserver() {
+  let cx = width/2;
+  let cy = height/2;
+  let mx = mouseX || cx;
+  let my = mouseY || cy;
+  let count = 22;
+
+  stroke(200, 200, 200, 23);
+  strokeWeight(.65);
+  for (let i = 0; i < count; i++) {
+    let a = TWO_PI * i/count + t*.15;
+    let x = cx + cos(a)*width*.34;
+    let y = cy + sin(a)*height*.34;
+    line(x, y, mx, my);
+  }
+
+  noFill();
+  ellipse(mx, my, 24 + 4*sin(t*3));
+  ellipse(mx, my, 45 + 7*cos(t*2));
+}
+
+function drawInfinity() {
+  let cx = width/2;
+  let cy = height/2;
+  let scale = min(width, height)*.25;
+
+  noFill();
+  stroke(240, 240, 240, 125);
+  strokeWeight(1.1);
+  beginShape();
+  for (let i = 0; i <= 500; i++) {
+    let u = map(i, 0, 500, 0, TWO_PI);
+    let x = cx + scale*cos(u)/(1 + .27*cos(u));
+    let y = cy + scale*.52*sin(2*u)/(1 + .27*cos(u));
+    vertex(x, y);
+  }
+  endShape();
+}
+
+function enterExam() {
+  changePhase(1);
+  document.querySelector('#exam').scrollIntoView({
+    behavior: reducedMotion ? 'auto' : 'smooth'
+  });
+}
+
+function revealQuestion() {
+  let q = document.querySelector('#question');
+  q.style.opacity = '.2';
+  setTimeout(() => {
+    q.style.opacity = '1';
+    q.textContent =
+      'What can you know about a system when your observations are incomplete?';
+  }, 250);
+}
+
+const memories = [
+  'You remember the laws you learned first. They gave the world a structure. But every model begins with assumptions, and every assumption has limits.',
+  'You remember getting an answer wrong. The mistake did not erase what you knew. It showed you where your reasoning needed to change.',
+  'An equation from one chapter resembles an idea from another. You begin connecting them. Understanding arrives not as a fact, but as a relationship.',
+  'You reach the boundary of what you know. For a moment, there is no next step. You must decide whether to guess, investigate, or begin again.'
+];
+
+function showMemory(i) {
+  document.querySelector('#memoryOutput').innerHTML =
+    '<p>' + memories[i] + '</p>';
+  phase = 2;
+}
+
+function changePhase(n) {
+  phase = n;
+}
+
+function showEnding(choice) {
+  phase = 3;
+  document.querySelector('#finalLine').textContent =
+    choice === 0
+      ? 'THE ANSWER IS YOURS. THE JUDGMENT IS NOT.'
+      : 'NOT KNOWING IS ALSO A PLACE TO BEGIN.';
+  document.querySelector('#finalLine').scrollIntoView({
+    behavior: reducedMotion ? 'auto' : 'smooth',
+    block: 'center'
+  });
+}
+
+function restartExam() {
+  phase = 0;
+  document.querySelector('#finalLine').textContent = '';
+  document.querySelector('#home').scrollIntoView({
+    behavior: reducedMotion ? 'auto' : 'smooth'
+  });
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+</script>
+</body>
+</html>
